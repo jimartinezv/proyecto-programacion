@@ -29,6 +29,12 @@ public class Comentario implements Serializable {
     private LocalDate fechaComentario;
     private int calificacion;
 
+    @ManyToOne
+    private Producto producto;
+
+    @ManyToOne
+    private Usuario usuario;
+
     public Comentario(String mensaje, String respuesta, LocalDate fechaComentario, int calificacion) {
         this.mensaje = mensaje;
         this.respuesta = respuesta;

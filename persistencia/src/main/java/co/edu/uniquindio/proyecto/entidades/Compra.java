@@ -25,6 +25,7 @@ public class Compra implements Serializable {
 
     @Column(name="timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaCompra;
+    @Column(nullable = false, length = 50)
     private String medioPago;
 
     @OneToMany(mappedBy = "compra")

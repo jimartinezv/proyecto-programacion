@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +25,12 @@ public class Subasta implements Serializable {
     @Column(nullable = false)
     @Future
     private LocalDateTime fechaLimite;
+
+    @ManyToOne
+    private Producto producto;
+
+    @OneToMany(mappedBy = "subasta")
+    private List<SubastaUsuario> subastaUsuario;
 
     public Subasta(LocalDateTime fechaLimite) {
         this.fechaLimite = fechaLimite;

@@ -14,24 +14,22 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class SubastaUsuario implements Serializable {
+public class Mensaje implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer codigo;
 
-    private double valor;
-    private LocalDateTime fechaSubasta;
+    private String mensaje;
+    private LocalDateTime fecha;
 
     @ManyToOne
-    private Usuario usuario;
+    private Chat chat;
 
-    @ManyToOne
-    private Subasta subasta;
-
-    public SubastaUsuario(double valor, LocalDateTime fechaSubasta) {
-        this.valor = valor;
-        this.fechaSubasta = fechaSubasta;
+    public Mensaje(String mensaje, LocalDateTime fecha) {
+        this.mensaje = mensaje;
+        this.fecha = fecha;
     }
+
 }

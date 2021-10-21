@@ -18,9 +18,8 @@ import java.io.Serializable;
 @MappedSuperclass
 public class Persona implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer codigo;
+    private String codigo;
     @Column(nullable = false, length = 55)
     private String nombre;
     @Column(nullable = false, length = 155)

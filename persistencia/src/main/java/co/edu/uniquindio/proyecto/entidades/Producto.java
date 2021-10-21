@@ -31,16 +31,32 @@ public class Producto implements Serializable {
     @Column( nullable = false)
     private double precio;
     @Future
-    private LocalDate fechaLimite;
+    private LocalDate fechaLmite;
     private float descuento;
+
+    @ElementCollection
+    private List<String> imagen;
 
     @ManyToOne
     private Usuario usuario;
 
     @OneToMany(mappedBy = "producto")
     private List<DetalleCompra> detalleCompra;
+
+    @OneToMany(mappedBy = "producto")
+    private List<Comentario> comentario;
+
+    @OneToMany(mappedBy = "producto")
+    private List<Subasta> subasta;
+
     @ManyToOne
     private Ciudad ciudad;
+
+    @ManyToMany(mappedBy = "producto")
+    private List<Carrito> carrito;
+
+    @OneToMany(mappedBy = "producto")
+    private List<Favorito> favorito;
 
 
 }
