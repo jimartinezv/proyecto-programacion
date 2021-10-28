@@ -7,10 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -89,4 +95,28 @@ public class UsuarioTest {
         Assertions.assertEquals("jimv92300@gmail.com", usuarioBuscado.getEmail());
 
     }
+
+    @Test
+
+    public void filtrarNombreTest(){
+        List<Usuario> lista= usuarioRepo.findAllByNombreContaining("a");
+        lista.forEach(usuario -> System.out.println(usuario));
+
+    }
+
+    @Test
+    public void limitarNombres(){
+        Pageable paginador= PageRequest.of(0,2);
+        Page<Usuario> lista =usuarioRepo.findAll(paginador);
+        System.out.println(lista);
+
+    }
+    @Test
+    public void OrdenarNombres(){
+        Pageable paginador= PageRequest.of(0,2);
+        List<Usuario> lista =usuarioRepo.findAll(Sort.by("nombre"));
+        System.out.println(lista);
+
+    }
+
 }
