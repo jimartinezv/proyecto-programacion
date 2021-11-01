@@ -19,6 +19,7 @@ import java.io.Serializable;
 public class Persona implements Serializable {
     @Id
     @EqualsAndHashCode.Include
+    @Column(nullable = false, length = 55)
     private String codigo;
     @Column(nullable = false, length = 55)
     private String nombre;
@@ -26,6 +27,9 @@ public class Persona implements Serializable {
     private String email;
     @Column(nullable = false, length = 55)
     private String contrasena;
+
+
+
 
     public Persona(String nombre, String email, String contrasena) {
         this.nombre = nombre;

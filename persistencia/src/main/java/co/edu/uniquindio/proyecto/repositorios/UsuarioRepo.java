@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
+import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,5 +32,14 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
 
     Page<Usuario> findAll(Pageable paginador);
 
+    @Query("select u from Favorito f, IN (f.usuario) u where u.email=:email")
+    List<Usuario> obtenerProductosFavoritos(String email);
+
+    @Query ("select u.email, p from Usuario u left join u.producto p")
+    List<Object[]> obtenerTodosUsuarios( );
+
+    //Dado el código de una subasta, devolver el usuario ganador de dicha subasta.
+    @Query("select u from Usuario u, IN(u.subastaUsuario) s, IN(s.subasta) su where su.codigo =:id")
+    Usuario usuarioGandorSubasta(Integer id);
 
 }

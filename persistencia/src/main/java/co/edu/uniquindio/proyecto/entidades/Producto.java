@@ -16,10 +16,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Producto implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Column(length=25)
+    private Integer id;
+
+
+    @Column(length=25, nullable = false)
     private String codigo;
 
     @Column(length=25, nullable = false)
@@ -41,12 +47,15 @@ public class Producto implements Serializable {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "producto")
+    @ToString.Exclude
     private List<DetalleCompra> detalleCompra;
 
     @OneToMany(mappedBy = "producto")
+    @ToString.Exclude
     private List<Comentario> comentario;
 
     @OneToMany(mappedBy = "producto")
+    @ToString.Exclude
     private List<Subasta> subasta;
 
     @ManyToOne
@@ -55,8 +64,14 @@ public class Producto implements Serializable {
     @ManyToMany(mappedBy = "producto")
     private List<Carrito> carrito;
 
+    @ManyToMany(mappedBy = "producto")
+    private List<Categoria> categoria;
+
     @OneToMany(mappedBy = "producto")
+    @ToString.Exclude
     private List<Favorito> favorito;
+
+
 
 
 }

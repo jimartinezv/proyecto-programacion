@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +22,9 @@ public class Categoria implements Serializable {
 
     @Column(nullable = false)
     private String nombre;
+
+    @ManyToMany
+    private List<Producto> producto;
 
     public Categoria(String nombre) {
         this.nombre = nombre;

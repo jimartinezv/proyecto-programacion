@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -16,5 +13,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class Administrador extends Persona implements Serializable {
-
+    @OneToOne
+    private TipoDocumento tipoDocumento;
 }

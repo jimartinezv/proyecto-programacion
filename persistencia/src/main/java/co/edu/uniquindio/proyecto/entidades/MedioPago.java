@@ -14,21 +14,19 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Chat implements Serializable {
-
+public class MedioPago implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer codigo;
 
-    @ManyToOne
-    private Usuario vendedor;
+    @Column(nullable = false)
+    private String descripcion;
 
-    @ManyToOne
-    private Usuario comprador;
+    @OneToMany(mappedBy = "medioPago")
+    private List<Compra> compra;
 
-
-
-    @OneToMany(mappedBy = "chat")
-    private List<Mensaje> mensajes;
+    public MedioPago(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

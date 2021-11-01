@@ -25,8 +25,10 @@ public class Compra implements Serializable {
 
     @Column(name="timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaCompra;
-    @Column(nullable = false, length = 50)
-    private String medioPago;
+    //@Column(nullable = false, length = 50)
+    //private String medioPago;
+    @ManyToOne
+    private MedioPago medioPago;
 
     @OneToMany(mappedBy = "compra")
     private List<DetalleCompra> detalleCompra;
@@ -34,8 +36,8 @@ public class Compra implements Serializable {
     @ManyToOne
     private Usuario usuario;
 
-    public Compra(LocalDateTime fechaCompra, String medioPago) {
+    public Compra(LocalDateTime fechaCompra) {
         this.fechaCompra = fechaCompra;
-        this.medioPago = medioPago;
+
     }
 }
