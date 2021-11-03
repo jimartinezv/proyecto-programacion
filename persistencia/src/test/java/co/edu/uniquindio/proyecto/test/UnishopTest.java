@@ -1,10 +1,7 @@
 package co.edu.uniquindio.proyecto.test;
 
 import co.edu.uniquindio.proyecto.dto.ProductoValido;
-import co.edu.uniquindio.proyecto.entidades.Categoria;
-import co.edu.uniquindio.proyecto.entidades.Compra;
-import co.edu.uniquindio.proyecto.entidades.Producto;
-import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.entidades.*;
 
 import co.edu.uniquindio.proyecto.repositorios.*;
 import org.hibernate.internal.build.AllowSysOut;
@@ -44,6 +41,15 @@ public class UnishopTest {
 
     @Autowired
     private CategoriaRepo categoriaRepo;
+
+    @Autowired
+    private ChatRepo chatRepo;
+
+    @Autowired
+    private SubastaRepo subastaRepo;
+
+    @Autowired
+    private  ComentarioRepo comentarioRepo;
 
     @Test
     public void crearUsuario(){
@@ -180,20 +186,20 @@ public class UnishopTest {
     @Test
     @Sql("classpath:datos.sql")
     public void listarProductosPorCategoriasTest() {
-        List<Object[]> respuesta = productoRepo.obtenerTotalProductosCategoria();
-        respuesta.forEach(r-> System.out.println(r[0]));
+        List<Object[]> respuesta = productoRepo.obtenerTotalProductosPorCategoria();
+        respuesta.forEach(r-> System.out.println(r[0]+"---"+r[1]));
     }
 
     @Test
     @Sql("classpath:datos.sql")
     public void obtenerProductosPorCategoriasSubastaTest() {
         List<Object[]> respuesta = productoRepo.obtenerTotalProductosPorCategoria2();
-        respuesta.forEach(r-> System.out.println(r[0]+"----"+r[1]+"----"+r[2]));
+        respuesta.forEach(r-> System.out.println(r[0]+"----"+r[1]));
     }
 
     @Test
     @Sql("classpath:datos.sql")
-    public void obtenerListaCategoriaCalificacionTest() {
+    public void obtenerListaCategoriaCalificacionPromedioTest() {
 
         List<Object[]> respuesta = categoriaRepo.listarCategoriasPorCalificacion();
         respuesta.forEach(r-> System.out.println(r[0]+"----"+r[1]));
@@ -206,6 +212,64 @@ public class UnishopTest {
         List<Object[]> respuesta = compraRepo.listarComprasPorMedioPago();
         respuesta.forEach(r-> System.out.println(r[0]+"----"+r[1]));
     }
+
+    @Test
+    @Sql("classpath:datos.sql")
+    public void obtenerListaChatVendedorTest() {
+
+        List<Object[]> respuesta = chatRepo.listarChatVendedor();
+        respuesta.forEach(r-> System.out.println(r[0]));
+    }
+
+    @Test
+    @Sql("classpath:datos.sql")
+    public void obtenerListaSubastaPorCategoriaTest() {
+
+        List<Object[]> subasta = subastaRepo.listarSubastaCategoria(1, LocalDateTime.now());
+        subasta.forEach(r-> System.out.println(r[0]+"---"+r[1]));
+    }
+
+    @Test
+    @Sql("classpath:datos.sql")
+    public void obtenerListaProductosSinRespuestaTest() {
+
+       List<Comentario> comentarios = comentarioRepo.listarComentariosPorProducto(2);
+       comentarios.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:datos.sql")
+    public void obtenerListaProductosConDescuentoTest() {
+
+        List<Producto> producto = productoRepo.listarProductosPorDescuento(30.0f);
+        producto.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:datos.sql")
+    public void obtenerUsuarioGanadorSubastaTest() {
+        List<Object[]> usuario = usuarioRepo.usuarioGandorSubasta(1);
+
+        usuario.forEach(r-> System.out.println(r[1]));
+    }
+
+    @Test
+    //@Sql("classpath:datos.sql")
+    public void obtenerValorTotalComprasUsuarioTest() {
+        List<Object[]> valorTotal = compraRepo.valorTotalComprasUsuario("1094908238");
+        valorTotal.forEach(r-> System.out.println(r[0]+"---"+r[1]));
+        //System.out.println((long)valorTotal);
+    }
+
+    @Test
+    //@Sql("classpath:datos.sql")
+    public void obtenerProductoMasVendidoPorCategoriaTest() {
+        List<Object[]> producto = productoRepo.mostarProductoMasVendidoCategoria();
+        producto.forEach(r-> System.out.println(r[0]+"---"+r[1]));
+        //System.out.println((long)valorTotal);
+    }
+
+
     /**
      * Trae los datos distinguiendo filas
 

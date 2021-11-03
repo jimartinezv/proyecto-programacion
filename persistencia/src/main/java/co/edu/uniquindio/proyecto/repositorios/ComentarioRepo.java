@@ -17,6 +17,9 @@ public interface ComentarioRepo extends JpaRepository<Comentario, Integer> {
     List<Comentario> listarComentariosRango2(int calificacionMenor, int calificacionMayor);
 
     //Una lista de los comentarios de un producto específico que aún no tienen respuesta.
-    @Query("select c from Comentario c, IN(c.producto) p, IN(p.comentario) co where c.producto=:id and co.respuesta=''")
+    @Query("select c from Comentario c, IN(c.producto) p where p.id=:id and c.respuesta is null " )
     List<Comentario> listarComentariosPorProducto(Integer id);
+
+    @Query("select count(c) from Comentario c where c.respuesta is null" )
+    Integer listarComentariosPorProducto2();
 }

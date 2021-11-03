@@ -46,8 +46,8 @@ INSERT INTO `usuario_telefono` (`usuario_codigo`, `telefono`, `telefono_key`) VA
 --ADMINISTRADOR--
 
 
-INSERT INTO `administrador` (`codigo`, `contrasena`, `email`, `nombre`, `tipo_documento_codigo`) VALUES
-    ('1094998883', '123456', 'admin@gmail.com', 'Roberto', 1);
+-- INSERT INTO `administrador` (`codigo`, `contrasena`, `email`, `nombre`, `tipo_documento_codigo`) VALUES
+--    ('1094998883', '123456', 'admin@gmail.com', 'Roberto', 1);
 
 
 --CATEGORÍA--
@@ -211,12 +211,18 @@ INSERT INTO `mensaje` (`codigo`, `fecha`, `mensaje`, `chat_codigo`) VALUES
 
 
 INSERT INTO `subasta` (`codigo`, `fecha_limite`, `producto_id`) VALUES
-    (1, '2021-11-01 05:04:31', 11);
+    (1, '2021-11-01 05:04:31', 11),
+    (2, '2021-11-01 05:04:31', 2),
+    (3, '2021-11-11 05:04:31', 5);
 
 
 --SUBASTA USUARIO--
 
 
+
 INSERT INTO `subasta_usuario` (`codigo`, `fecha_subasta`, `valor`, `subasta_codigo`, `usuario_codigo`) VALUES
                                                                                                            (1, '2021-11-01 05:04:46', 30000, 1, '1094908238'),
-                                                                                                           (2, '2021-11-01 05:04:46', 35000, 1, '1094895697');
+                                                                                                           (2, '2021-11-01 05:04:46', 35000, 1, '1094895697'),
+                                                                                                           (3, '2021-11-01 05:04:46', 38000, 2, '1094908238'),
+                                                                                                           (4, '2021-11-01 05:04:46', 50000, 2, '1094895697'),
+                                                                                                           (5, '2021-11-01 05:04:46', 3000, 3, '1094908238');

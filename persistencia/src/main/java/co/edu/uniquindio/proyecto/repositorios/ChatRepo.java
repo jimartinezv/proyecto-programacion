@@ -17,6 +17,6 @@ public interface ChatRepo extends JpaRepository<Chat, Integer> {
      *
      * @return
      */
-    @Query("select c.mensajes from Chat c ,IN (c.vendedor) v")
+    @Query("select c from Chat c ,IN (c.vendedor) v")
     List<Object[]> listarChatVendedor();
 }

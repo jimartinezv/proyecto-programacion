@@ -19,6 +19,6 @@ public interface CompraRepo extends JpaRepository<Compra, Integer> {
     List<Object[]> listarComprasPorMedioPago();
 
     //El valor total de cada una de las compras que ha hecho un usuario específico.
-    @Query("select sum(d.precioPoducto*d.unidades) from Compra c, IN(c.usuario) u, IN (c.detalleCompra) d where u.codigo=:id")
-    Double valorTotalComprasUsuario(Integer id);
+    @Query("select sum(d.precioPoducto*d.unidades), c.codigo from Compra c, IN(c.usuario) u, IN (c.detalleCompra) d where u.codigo=:id group by  c.codigo")
+    List<Object[]> valorTotalComprasUsuario(String id);
 }

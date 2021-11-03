@@ -39,7 +39,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     List<Object[]> obtenerTodosUsuarios( );
 
     //Dado el código de una subasta, devolver el usuario ganador de dicha subasta.
-    @Query("select u from Usuario u, IN(u.subastaUsuario) s, IN(s.subasta) su where su.codigo =:id")
-    Usuario usuarioGandorSubasta(Integer id);
+    @Query("select max(s.valor),s.usuario.nombre from Usuario u, IN(u.subastaUsuario) s, IN(s.subasta) su  where su.codigo =:id")
+    List<Object[]> usuarioGandorSubasta(Integer id);
 
 }
