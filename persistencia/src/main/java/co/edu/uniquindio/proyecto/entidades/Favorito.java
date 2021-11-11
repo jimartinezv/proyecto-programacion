@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyecto.entidades;
+/*package co.edu.uniquindio.proyecto.entidades;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,3 +26,4 @@ public class Favorito implements Serializable {
     @ManyToOne
     private Producto producto;
 }
+*/

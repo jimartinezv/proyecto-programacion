@@ -157,7 +157,7 @@ public class UnishopTest {
     @Test
     @Sql("classpath:datos.sql")
     public void obtenerFavoritosUsuarioTest(){
-       List<Usuario> favoritos = usuarioRepo.obtenerProductosFavoritos("jim@uq.com");
+       List<Producto> favoritos = usuarioRepo.obtenerProductosFavoritos("jim@uq.com");
         Assertions.assertEquals(2,favoritos.size());
     }
 
@@ -264,8 +264,9 @@ public class UnishopTest {
     @Test
     //@Sql("classpath:datos.sql")
     public void obtenerProductoMasVendidoPorCategoriaTest() {
-        List<Object[]> producto = productoRepo.mostarProductoMasVendidoCategoria();
-        producto.forEach(r-> System.out.println(r[0]+"---"+r[1]));
+        List<Object[]> producto = productoRepo.mostarProductoMasVendidoCategoria(7);
+        //producto.forEach(r-> System.out.println(r[0]+"---"));
+        System.out.println(producto.get(0)[1]);
         //System.out.println((long)valorTotal);
     }
 

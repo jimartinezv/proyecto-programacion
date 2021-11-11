@@ -32,8 +32,8 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
 
     Page<Usuario> findAll(Pageable paginador);
 
-    @Query("select u from Favorito f, IN (f.usuario) u where u.email=:email")
-    List<Usuario> obtenerProductosFavoritos(String email);
+    @Query("select p from Producto p, IN (p.favoritoUsuario) u where u.email=:email")
+    List<Producto> obtenerProductosFavoritos(String email);
 
     @Query ("select u.email, p from Usuario u left join u.producto p")
     List<Object[]> obtenerTodosUsuarios( );
@@ -41,5 +41,14 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     //Dado el código de una subasta, devolver el usuario ganador de dicha subasta.
     @Query("select max(s.valor),s.usuario.nombre from Usuario u, IN(u.subastaUsuario) s, IN(s.subasta) su  where su.codigo =:id")
     List<Object[]> usuarioGandorSubasta(Integer id);
+
+    //Eliminar usuario por codigo
+    void deleteUsuarioByCodigo(String codigo);
+
+    Optional<Usuario> findByCodigo(String codigo);
+
+    Optional<Usuario> findByEmail(String email);
+
+    Optional<Usuario> findByUserName(String userName);
 
 }

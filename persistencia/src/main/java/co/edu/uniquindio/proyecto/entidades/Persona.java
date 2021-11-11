@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 
 
@@ -19,11 +21,13 @@ import java.io.Serializable;
 public class Persona implements Serializable {
     @Id
     @EqualsAndHashCode.Include
-    @Column(nullable = false, length = 55)
+    @Column(nullable = false, length = 55, unique = true)
+    @Length(max = 50)
     private String codigo;
     @Column(nullable = false, length = 55)
     private String nombre;
     @Column(nullable = false, length = 155, unique = true)
+    @Email
     private String email;
     @Column(nullable = false, length = 55)
     private String contrasena;

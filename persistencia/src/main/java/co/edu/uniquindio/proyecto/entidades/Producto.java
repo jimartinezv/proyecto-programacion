@@ -67,9 +67,10 @@ public class Producto implements Serializable {
     @ManyToMany(mappedBy = "producto")
     private List<Categoria> categoria;
 
-    @OneToMany(mappedBy = "producto")
+    //@OneToMany(mappedBy = "producto")
+    @ManyToMany
     @ToString.Exclude
-    private List<Favorito> favorito;
+    private List<Usuario> favoritoUsuario;
 
 
 

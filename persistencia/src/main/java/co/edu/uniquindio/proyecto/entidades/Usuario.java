@@ -22,7 +22,7 @@ public class Usuario extends Persona implements Serializable {
     private Map<String, String> telefono;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     private Ciudad ciudad;
 
     @OneToMany(mappedBy = "usuario")
@@ -49,9 +49,10 @@ public class Usuario extends Persona implements Serializable {
     @OneToOne
     private TipoDocumento tipoDocumento;
 
-    @OneToMany(mappedBy = "usuario")
+    //@OneToMany(mappedBy = "usuario")
+    @ManyToMany(mappedBy = "favoritoUsuario")
     @ToString.Exclude
-    private List<Favorito> favorito;
+    private List<Producto> productosFavoritos;
 
     @OneToMany(mappedBy = "comprador")
     @ToString.Exclude
@@ -63,6 +64,8 @@ public class Usuario extends Persona implements Serializable {
 
 
     private LocalDate fechaNacimiento;
+    @Column(nullable = false, length = 50, unique = true)
+    private String userName;
 
 
     public Usuario( Map<String, String> telefono, String direccion) {
@@ -71,11 +74,11 @@ public class Usuario extends Persona implements Serializable {
         this.direccion = direccion;
     }
 
-    public Usuario(String nombre, String email, String contrasena, Map<String, String> telefono,  String direccion, LocalDate fechaNacimiento) {
+    public Usuario(String nombre, String email, String contrasena,  String direccion, LocalDate fechaNacimiento, String userName, Ciudad ciudad) {
         super(nombre, email, contrasena);
-        this.telefono = telefono;
-        this.producto = producto;
+        this.ciudad=ciudad;
         this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;
+        this.userName = userName;
     }
 }

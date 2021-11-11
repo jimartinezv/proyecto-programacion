@@ -62,8 +62,12 @@ public interface ProductoRepo extends JpaRepository<Producto, String> {
     List<Producto> listarProductosPorDescuento(float descuento);
 
     //El producto más vendido de una categoría específica.
-    @Query("select max(count(d.unidades)), c.nombre from Producto p , IN(p.categoria) c, IN(p.detalleCompra) d  group by c.nombre")
-    List<Object[]> mostarProductoMasVendidoCategoria();
+    //select sum(dc.unidades) suma, max(dc.unidades), p.nombre, c.nombre, c.codigo
+    // from producto p join categoria_producto cp on cp.producto_id=p.id
+    // join categoria c on c.codigo= cp.categoria_codigo join detalle_compra dc on dc.producto_id=p.id
+    // where c.codigo=7 GROUP BY p.nombre,c.codigo order by suma DESC LIMIT 1;
+    @Query("select sum(dc.unidades), p.nombre as suma from DetalleCompra dc, IN(dc.producto) p, in(p.categoria) c where c.codigo=:id group by p.nombre,c.codigo order by suma desc")
+    List<Object[]> mostarProductoMasVendidoCategoria(Integer id);
 
 
 }
