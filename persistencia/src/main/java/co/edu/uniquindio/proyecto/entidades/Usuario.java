@@ -4,7 +4,6 @@ import lombok.*;
 
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -14,8 +13,8 @@ import java.util.Map;
 @Entity
 @Getter
 @Setter
+//@ToString(callSuper = true)
 @NoArgsConstructor
-@ToString(callSuper = true)
 public class Usuario extends Persona implements Serializable {
 
     @ElementCollection
@@ -24,6 +23,10 @@ public class Usuario extends Persona implements Serializable {
     @ManyToOne
     //@JoinColumn(nullable = false)
     private Ciudad ciudad;
+
+    @ManyToOne
+    //@JoinColumn(nullable = false)
+    private TipoDocumento tipoDocumento;
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
@@ -46,8 +49,7 @@ public class Usuario extends Persona implements Serializable {
     @ToString.Exclude
     private Carrito carrito;
 
-    @OneToOne
-    private TipoDocumento tipoDocumento;
+
 
     //@OneToMany(mappedBy = "usuario")
     @ManyToMany(mappedBy = "favoritoUsuario")
@@ -68,14 +70,10 @@ public class Usuario extends Persona implements Serializable {
     private String userName;
 
 
-    public Usuario( Map<String, String> telefono, String direccion) {
 
-        this.telefono = telefono;
-        this.direccion = direccion;
-    }
 
-    public Usuario(String nombre, String email, String contrasena,  String direccion, LocalDate fechaNacimiento, String userName, Ciudad ciudad) {
-        super(nombre, email, contrasena);
+    public Usuario(String codigo, String nombre, String email, String contrasena,  String direccion, LocalDate fechaNacimiento, String userName, Ciudad ciudad) {
+        super(codigo, nombre, email, contrasena);
         this.ciudad=ciudad;
         this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;

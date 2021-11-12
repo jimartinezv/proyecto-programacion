@@ -6,6 +6,9 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,18 +25,29 @@ public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer id;
+    private Integer codigo;
 
-
+    /*
+    @NotBlank
     @Column(length=25, nullable = false)
     private String codigo;
-
+    */
+    @NotBlank(message = "El nombre del producto es obligatorio")
     @Column(length=25, nullable = false)
     private String nombre;
+
+    @PositiveOrZero
     @Column( nullable = false)
     private Integer unidades;
 
+    /**
+     * Permite que el campo a parte de no ser nulo que no este vacio
+     * Solo sirve en string
+     */
+    @NotBlank
     private String descripcion;
+
+    @Positive
     @Column( nullable = false)
     private double precio;
     @Future

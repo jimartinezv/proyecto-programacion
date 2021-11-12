@@ -1,9 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.validator.constraints.Length;
 
@@ -35,7 +32,8 @@ public class Persona implements Serializable {
 
 
 
-    public Persona(String nombre, String email, String contrasena) {
+    public Persona(String codigo,String nombre, String email, String contrasena) {
+        this.codigo=codigo;
         this.nombre = nombre;
         this.email = email;
         this.contrasena = contrasena;

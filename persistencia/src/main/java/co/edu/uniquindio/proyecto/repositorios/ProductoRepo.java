@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductoRepo extends JpaRepository<Producto, String> {
+public interface ProductoRepo extends JpaRepository<Producto, Integer> {
 
     Page<Producto> findAll(Pageable paginador);
 
@@ -68,6 +68,7 @@ public interface ProductoRepo extends JpaRepository<Producto, String> {
     // where c.codigo=7 GROUP BY p.nombre,c.codigo order by suma DESC LIMIT 1;
     @Query("select sum(dc.unidades), p.nombre as suma from DetalleCompra dc, IN(dc.producto) p, in(p.categoria) c where c.codigo=:id group by p.nombre,c.codigo order by suma desc")
     List<Object[]> mostarProductoMasVendidoCategoria(Integer id);
+
 
 
 }

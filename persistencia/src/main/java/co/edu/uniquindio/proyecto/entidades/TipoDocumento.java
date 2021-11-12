@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,11 +20,9 @@ public class TipoDocumento implements Serializable {
     @Column(nullable = false, length = 55)
     private String tipoDocumento;
 
-    @OneToOne(mappedBy = "tipoDocumento")
-    private Usuario usuario;
 
-    @OneToOne(mappedBy = "tipoDocumento")
-    private Administrador administrador;
+    @OneToMany(mappedBy = "tipoDocumento")
+    private List<Usuario> usuario;
 
 
     public TipoDocumento(String tipoDocumento) {

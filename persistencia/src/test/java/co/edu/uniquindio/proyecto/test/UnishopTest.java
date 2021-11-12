@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -169,7 +170,25 @@ public class UnishopTest {
     }
 
     @Test
-    @Sql("classpath:datos.sql")
+    //@Sql("classpath:datos.sql")
+    public void listarUsuarioTest(){
+        List<Usuario> usuarios = usuarioRepo.findAll();
+
+
+        //Assertions.assertEquals(2,favoritos.size());
+    }
+
+    @Test
+    //@Sql("classpath:datos.sql")
+    public void listarProductosTest(){
+        List<Producto> productos = productoRepo.findAll();
+
+
+        //Assertions.assertEquals(2,favoritos.size());
+    }
+
+    @Test
+    //@Sql("classpath:datos.sql")
     public void listarUsuarioProductosTest(){
         List<Object[]> respuesta = usuarioRepo.obtenerTodosUsuarios();
         for (Object[] o: respuesta)
@@ -177,7 +196,7 @@ public class UnishopTest {
     }
 
     @Test
-    @Sql("classpath:datos.sql")
+   // @Sql("classpath:datos.sql")
     public void listarCategoriasTest() {
         List<Categoria> categorias = categoriaRepo.listaCategorias();
         categorias.forEach(System.out::println);

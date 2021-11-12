@@ -23,7 +23,13 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario actualizarUsuario(Usuario u) throws Exception {
-        return buscarUsuario(u);
+       Optional<Usuario> buscado= usuarioRepo.findByCodigo(u.getCodigo());
+
+
+        if(!buscado.isPresent())
+            throw new Exception("Codigo de usuario no existente");
+        return usuarioRepo.save(u);
+
     }
 
     private Usuario buscarUsuario(Usuario u) throws Exception {
@@ -39,22 +45,25 @@ public class UsuarioServicioImpl implements UsuarioServicio{
         return usuarioRepo.save(u);
     }
 
-    private Optional<Usuario> buscarPorEmail(String email){
+    private Optional<Usuario> buscarPorEmail(String email) throws Exception{
+        if (usuarioRepo.findByEmail(email).isPresent())
+            throw  new Exception("El correo ya existe");
         return usuarioRepo.findByEmail(email);
     }
 
     @Override
     public void eliminarUsuario(String codigo) throws Exception {
         Optional<Usuario> buscado= usuarioRepo.findByCodigo(codigo);
-        if(buscado.isPresent())
+        if(!buscado.isPresent())
             throw new Exception("El codigo del usuario no existe");
         usuarioRepo.deleteUsuarioByCodigo(codigo);
 
     }
 
     @Override
-    public List<Usuario> listarUsuarios() throws Exception {
-        return null;
+    public List<Usuario> listarUsuarios()  {
+        List<Usuario> usuarios= usuarioRepo.findAll();
+        return usuarios;
     }
 
     @Override
@@ -72,6 +81,17 @@ public class UsuarioServicioImpl implements UsuarioServicio{
         if(buscado.isEmpty())
             throw new Exception("El codigo del usuario no existe");
         return buscado.get();
+
+    }
+
+    @Override
+    public Usuario login(String email, String password) throws Exception {
+        return usuarioRepo.findByContrasenaAndAndEmail(password, email).orElseThrow(()-> new Exception("Los datos son incorrectos"));
+
+    }
+
+    @Override
+    public void recuperarContrasena(String email) {
 
     }
 }
