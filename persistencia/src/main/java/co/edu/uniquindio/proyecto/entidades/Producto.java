@@ -11,6 +11,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -44,20 +45,24 @@ public class Producto implements Serializable {
      * Permite que el campo a parte de no ser nulo que no este vacio
      * Solo sirve en string
      */
-    @NotBlank
+
+    @NotBlank(message = "La descripción del producto es obligatoria")
+    @Column(nullable = false)
     private String descripcion;
 
-    @Positive
+    @Positive(message = "El precio del producto no es válido")
     @Column( nullable = false)
-    private double precio;
+    private float precio;
     @Future
-    private LocalDate fechaLmite;
+    private LocalDateTime fechaLmite;
+    @PositiveOrZero
     private float descuento;
 
     @ElementCollection
     private List<String> imagen;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Usuario usuario;
 
     @OneToMany(mappedBy = "producto")
@@ -86,7 +91,13 @@ public class Producto implements Serializable {
     @ToString.Exclude
     private List<Usuario> favoritoUsuario;
 
-
-
-
+    public Producto(String nombre, Integer unidades, String descripcion, float precio, LocalDateTime fechaLmite, float descuento, Usuario usuario) {
+        this.nombre = nombre;
+        this.unidades = unidades;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.fechaLmite = fechaLmite;
+        this.descuento = descuento;
+        this.usuario = usuario;
+    }
 }
