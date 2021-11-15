@@ -14,6 +14,7 @@
 </h:head>
 <h:body>
     <h1>Registrar usuario</h1>
+    <p:panel header="Registar Usuario.">
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel value="Código" for="codigo_u"/>
@@ -30,9 +31,14 @@
 
             <p:outputLabel value="Contraseña" for="contrasena_u"/>
             <p:password id="contrasena_u" value="#{usuarioBean.usuario.contrasena}" required="true"/>
+
+
+
+
         </h:panelGrid>
         <p:growl showDetail="true"/>
         <p:commandButton value="Registrar usuario" action="#{usuarioBean.registrarUsuario}" update="@form" icon="pi pi-user-plus"/>
     </h:form>
+    </p:panel>
 </h:body>
 </html>

@@ -20,4 +20,7 @@ public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
     @Query("select u from Usuario u")
     List<Usuario> listaUsuariosTodos();
 
+    @Query("select c from Ciudad c")
+    List<Ciudad> listarCiudades();
+
 }

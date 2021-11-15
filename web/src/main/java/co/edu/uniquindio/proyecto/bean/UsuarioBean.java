@@ -1,7 +1,9 @@
 package co.edu.uniquindio.proyecto.bean;
 
 
+import co.edu.uniquindio.proyecto.entidades.Ciudad;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.servicio.CiudadServicio;
 import co.edu.uniquindio.proyecto.servicio.UsuarioServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +15,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @ViewScoped
@@ -22,12 +27,21 @@ public class UsuarioBean implements Serializable {
     private Usuario usuario;
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private CiudadServicio ciudadServicio;
     @Getter
     private String login= logearse();
 
+    //@Getter @Setter
+    //private String city;
+    @Getter @Setter
+    private Map<Integer, String> cities = new HashMap<>();
+
     @PostConstruct
     public void inicializar(){
-        usuario = new Usuario();
+        this.usuario = new Usuario();
+        this.cities=mostrarCiudades();
     }
 
     public void registrarUsuario(){
@@ -41,6 +55,14 @@ public class UsuarioBean implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public Map<Integer,String> mostrarCiudades(){
+        Map<Integer,String> c= new HashMap<>();
+        List<Ciudad>ciudades=ciudadServicio.obtenerCiudades();
+        ciudades.forEach(e-> c.put(e.getCodigo(),e.getNombre()));
+        return c;
+    }
+
     public String logearse(){
         String p="";
         for (int i=1;i<=5;i++){
