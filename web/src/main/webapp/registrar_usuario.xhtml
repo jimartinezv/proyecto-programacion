@@ -18,7 +18,7 @@
     <h:form>
         <h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel value="Código" for="codigo_u"/>
-            <p:inputText id="codigo_u" value="#{usuarioBean.usuario.codigo}" required="true"/>
+            <p:inputText id="codigo_u" value="#{usuarioBean.usuario.documento}" required="true"/>
 
             <p:outputLabel value="Nombre" for="nombre_u"/>
             <p:inputText id="nombre_u" value="#{usuarioBean.usuario.nombre}" required="true"/>
@@ -29,10 +29,22 @@
             <p:outputLabel value="Nombre de usuario" for="username_u"/>
             <p:inputText id="username_u" value="#{usuarioBean.usuario.userName}" required="true"/>
 
+            <p:outputLabel value="Direccion" for="direccion_u"/>
+            <p:inputText id="direccion_u" value="#{usuarioBean.usuario.direccion}" required="true"/>
+
             <p:outputLabel value="Contraseña" for="contrasena_u"/>
             <p:password id="contrasena_u" value="#{usuarioBean.usuario.contrasena}" required="true"/>
 
+            <p:outputLabel value="Fecha Nacimiento" for="born_u"/>
+            <p:datePicker id="born_u" value="#{usuarioBean.usuario.fechaNacimiento}" required="true"/>
 
+
+
+            <p:outputLabel for="ciudad_u" value="Ciudad"/>
+            <p:selectOneMenu id="ciudad_u" value="#{usuarioBean.labeled}">
+                <f:selectItem itemLabel="Seleccione ciudad" itemValue=""/>
+                <f:selectItems value="#{usuarioBean.listaCiudades}"/>
+            </p:selectOneMenu>
 
 
         </h:panelGrid>

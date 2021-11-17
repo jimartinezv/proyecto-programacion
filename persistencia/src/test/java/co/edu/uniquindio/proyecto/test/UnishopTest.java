@@ -56,7 +56,7 @@ public class UnishopTest {
     public void crearUsuario(){
 
         Usuario usuario= new Usuario();
-        usuario.setCodigo("1094908238");
+        usuario.setDocumento("1094908238");
         usuario.setNombre("Jorge Ivan");
         usuario.setEmail("jimartinezv@uqvirtual.edu.co");
         usuario.setContrasena("12456");
@@ -77,7 +77,7 @@ public class UnishopTest {
     @Test
     public void eliminarUsuario(){
         Usuario usuario= new Usuario();
-        usuario.setCodigo("1094908238");
+        usuario.setDocumento("1094908238");
         usuario.setNombre("Jorge Ivan");
         usuario.setEmail("jimartinezv@uqvirtual.edu.co");
         usuario.setContrasena("12456");
@@ -99,7 +99,7 @@ public class UnishopTest {
     @Test
     public void actualizarUsuario(){
         Usuario usuario= new Usuario();
-        usuario.setCodigo("1094908238");
+        usuario.setDocumento("1094908238");
         usuario.setNombre("Jorge Ivan");
         usuario.setEmail("jimartinezv@uqvirtual.edu.co");
         usuario.setContrasena("12456");

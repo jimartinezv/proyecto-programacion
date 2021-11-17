@@ -21,16 +21,18 @@ public class Usuario extends Persona implements Serializable {
     private Map<String, String> telefono;
 
     @ManyToOne
-    //@JoinColumn(nullable = false)
+    @JoinColumn(nullable = false)
     private Ciudad ciudad;
 
     @ManyToOne
-    //@JoinColumn(nullable = false)
+    @JoinColumn(nullable = false)
     private TipoDocumento tipoDocumento;
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
     private List<Producto> producto;
+
+    @Column(nullable = false, length = 150)
     private String direccion;
 
     @OneToMany(mappedBy = "usuario")
@@ -64,7 +66,7 @@ public class Usuario extends Persona implements Serializable {
     @ToString.Exclude
     private List<Chat> chatVendedor;
 
-
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
     @Column(nullable = false, length = 50, unique = true)
     private String userName;

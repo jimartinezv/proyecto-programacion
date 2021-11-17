@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CompraRepo extends JpaRepository<Compra, Integer> {
 
-    @Query("select  count(distinct d.producto)  from Compra c join c.detalleCompra d where c.usuario.codigo=:codigo")
+    @Query("select  count(distinct d.producto)  from Compra c join c.detalleCompra d where c.usuario.documento=:codigo")
     Long obtenerListaProductosComprados(String codigo);
 
     //La cantidad de compras que se hace por cada medio de pago disponible.
@@ -19,6 +19,6 @@ public interface CompraRepo extends JpaRepository<Compra, Integer> {
     List<Object[]> listarComprasPorMedioPago();
 
     //El valor total de cada una de las compras que ha hecho un usuario específico.
-    @Query("select sum(d.precioPoducto*d.unidades), c.codigo from Compra c, IN(c.usuario) u, IN (c.detalleCompra) d where u.codigo=:id group by  c.codigo")
+    @Query("select sum(d.precioPoducto*d.unidades), c.codigo from Compra c, IN(c.usuario) u, IN (c.detalleCompra) d where u.documento=:id group by  c.codigo")
     List<Object[]> valorTotalComprasUsuario(String id);
 }

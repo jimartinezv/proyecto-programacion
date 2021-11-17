@@ -63,6 +63,10 @@ public class Producto implements Serializable {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    private CondicionProducto condicionProducto;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Usuario usuario;
 
     @OneToMany(mappedBy = "producto")

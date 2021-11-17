@@ -23,7 +23,7 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario actualizarUsuario(Usuario u) throws Exception {
-       Optional<Usuario> buscado= usuarioRepo.findByCodigo(u.getCodigo());
+       Optional<Usuario> buscado= usuarioRepo.findByDocumento(u.getDocumento());
 
 
         if(!buscado.isPresent())
@@ -33,7 +33,7 @@ public class UsuarioServicioImpl implements UsuarioServicio{
     }
 
     private Usuario buscarUsuario(Usuario u) throws Exception {
-        Optional<Usuario> buscado= usuarioRepo.findByCodigo(u.getCodigo());
+        Optional<Usuario> buscado= usuarioRepo.findByDocumento(u.getDocumento());
         if(buscado.isPresent())
             throw new Exception("El codigo del usuario ya existe");
 
@@ -53,10 +53,10 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public void eliminarUsuario(String codigo) throws Exception {
-        Optional<Usuario> buscado= usuarioRepo.findByCodigo(codigo);
+        Optional<Usuario> buscado= usuarioRepo.findByDocumento(codigo);
         if(!buscado.isPresent())
             throw new Exception("El codigo del usuario no existe");
-        usuarioRepo.deleteUsuarioByCodigo(codigo);
+        usuarioRepo.deleteUsuarioByDocumento(codigo);
 
     }
 
@@ -77,7 +77,7 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario obtenerUsuario(String codigo) throws Exception {
-        Optional<Usuario> buscado= usuarioRepo.findByCodigo(codigo);
+        Optional<Usuario> buscado= usuarioRepo.findByDocumento(codigo);
         if(buscado.isEmpty())
             throw new Exception("El codigo del usuario no existe");
         return buscado.get();

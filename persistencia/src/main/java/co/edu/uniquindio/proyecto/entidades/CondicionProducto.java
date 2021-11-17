@@ -1,9 +1,11 @@
 package co.edu.uniquindio.proyecto.entidades;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,25 +14,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Ciudad implements Serializable {
-
+public class CondicionProducto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer codigo;
-    @Column(length = 55)
+    @Column(nullable = false, length = 55)
+    private String tipoDocumento;
 
-    @ToString.Include
-    private String nombre;
-
-
-    @OneToMany(mappedBy = "ciudad")
-    private List<Usuario> usuario;
-
-    @OneToMany(mappedBy = "ciudad")
+    @OneToMany(mappedBy = "condicionProducto")
     private List<Producto> producto;
-
-    public Ciudad(String nombre) {
-        this.nombre = nombre;
-    }
 }

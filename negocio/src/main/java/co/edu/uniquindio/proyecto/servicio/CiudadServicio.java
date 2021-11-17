@@ -9,5 +9,7 @@ public interface CiudadServicio {
 
     List<Ciudad> obtenerCiudades();
 
+    Ciudad buscarCiudadPorCodigo(Integer codigo);
+
 
 }

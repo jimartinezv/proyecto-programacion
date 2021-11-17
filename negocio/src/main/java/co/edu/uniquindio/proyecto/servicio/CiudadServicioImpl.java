@@ -18,4 +18,9 @@ public class CiudadServicioImpl implements CiudadServicio{
         List<Ciudad> ciudades= ciudadRepo.listarCiudades();
         return ciudades;
     }
+
+    @Override
+    public Ciudad buscarCiudadPorCodigo(Integer codigo) {
+        return ciudadRepo.obtenerCiudadPorCodigo(codigo);
+    }
 }

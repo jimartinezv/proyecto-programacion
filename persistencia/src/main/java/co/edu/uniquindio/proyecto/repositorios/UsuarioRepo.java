@@ -48,9 +48,9 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     List<Object[]> usuarioGandorSubasta(Integer id);
 
     //Eliminar usuario por codigo
-    void deleteUsuarioByCodigo(String codigo);
+    void deleteUsuarioByDocumento(String codigo);
 
-    Optional<Usuario> findByCodigo(String codigo);
+    Optional<Usuario> findByDocumento(String codigo);
 
     Optional<Usuario> findByEmail(String email);
 

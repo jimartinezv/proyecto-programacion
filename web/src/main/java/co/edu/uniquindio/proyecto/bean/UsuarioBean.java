@@ -9,15 +9,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @ViewScoped
@@ -30,44 +30,60 @@ public class UsuarioBean implements Serializable {
 
     @Autowired
     private CiudadServicio ciudadServicio;
-    @Getter
-    private String login= logearse();
 
-    //@Getter @Setter
-    //private String city;
     @Getter @Setter
-    private Map<Integer, String> cities = new HashMap<>();
+    private Integer labeled;
+
+    @Setter @Getter
+    private Ciudad ciu;
+
+    @Getter @Setter
+    private List<SelectItem> listaCiudades;
+
+    public List<SelectItem> getListaCiudades(){
+        this.listaCiudades = new ArrayList<SelectItem>();
+        List<Ciudad> ciudades=ciudadServicio.obtenerCiudades();
+        listaCiudades.clear();
+        for(Ciudad ciaa: ciudades){
+            SelectItem ciuItem= new SelectItem(ciaa.getCodigo(),ciaa.getNombre());
+            this.listaCiudades.add(ciuItem);
+
+        }
+
+
+        return listaCiudades;
+    }
 
     @PostConstruct
     public void inicializar(){
+        System.out.println("Lo primero que se sabe es :"+this.labeled);
+
         this.usuario = new Usuario();
-        this.cities=mostrarCiudades();
+        ciu= new Ciudad();
+
     }
 
-    public void registrarUsuario(){
+    public String registrarUsuario(){
         try {
+            ciu=buscarCiudadUsuario();
+            usuario.setCiudad(ciu);
             usuarioServicio.registrarUsuario(usuario);
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Registro exitoso");
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            return "producto_creado";
         } catch (Exception e) {
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta",e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
             e.printStackTrace();
         }
+        return null;
     }
 
-    public Map<Integer,String> mostrarCiudades(){
-        Map<Integer,String> c= new HashMap<>();
-        List<Ciudad>ciudades=ciudadServicio.obtenerCiudades();
-        ciudades.forEach(e-> c.put(e.getCodigo(),e.getNombre()));
-        return c;
+    public Ciudad buscarCiudadUsuario() throws Exception{
+
+        return ciudadServicio.buscarCiudadPorCodigo(labeled);
     }
 
-    public String logearse(){
-        String p="";
-        for (int i=1;i<=5;i++){
-            p+="<h"+i+"> Este es el ciclo numero: "+i+"</h"+i+">";
-        }
-        return p;
-    }
+
+
 }
