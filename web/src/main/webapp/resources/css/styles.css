@@ -14,3 +14,16 @@
 .icon-menu{
     size: 1.5rem;
 }
+.cajones{
+    bbackground-color: #0c4128;
+
+    border: 1px;
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+    width: 100%;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

@@ -18,8 +18,8 @@ public class Ciudad implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer codigo;
-    @Column(length = 55)
 
+    @Column(length = 55)
     @ToString.Include
     private String nombre;
 
@@ -30,7 +30,11 @@ public class Ciudad implements Serializable {
     @OneToMany(mappedBy = "ciudad")
     private List<Producto> producto;
 
-    public Ciudad(String nombre) {
+    @ManyToOne
+    private Departamento departamento;
+
+    public Ciudad(String nombre, Departamento departamento) {
+        this.departamento=departamento;
         this.nombre = nombre;
     }
 }

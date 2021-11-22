@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
 import co.edu.uniquindio.proyecto.entidades.Ciudad;
+import co.edu.uniquindio.proyecto.entidades.Departamento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import jdk.dynalink.linker.LinkerServices;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,10 +22,22 @@ public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
     @Query("select u from Usuario u")
     List<Usuario> listaUsuariosTodos();
 
-    @Query("select c from Ciudad c")
+    @Query("select c from Ciudad c ")
     List<Ciudad> listarCiudades();
 
     @Query("select c from Ciudad c where c.codigo=:id")
     Ciudad obtenerCiudadPorCodigo(Integer id);
+
+    @Query("select c from Ciudad c where c.departamento.codigo=:id")
+    List<Ciudad> ciudadesPorDepartamento(Integer id);
+
+    /**
+     * Sentencia que trae los departamentos
+     */
+    @Query("select d from Departamento d")
+    List<Departamento> listarDepartamentos();
+
+    List<Ciudad> findCiudadByDepartamento(Integer id);
+
 
 }

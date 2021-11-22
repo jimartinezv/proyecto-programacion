@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyecto.bean;
 
 
 import co.edu.uniquindio.proyecto.entidades.Ciudad;
+import co.edu.uniquindio.proyecto.entidades.Departamento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.servicio.CiudadServicio;
 import co.edu.uniquindio.proyecto.servicio.UsuarioServicio;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,42 +34,46 @@ public class UsuarioBean implements Serializable {
     @Autowired
     private CiudadServicio ciudadServicio;
 
+
+
     @Getter @Setter
-    private Integer labeled;
+    private Integer indexCiudad, indexDepto;
 
     @Setter @Getter
-    private Ciudad ciu;
+    private Ciudad ciudad;
+
+    @Setter @Getter
+    private Departamento depto;
 
     @Getter @Setter
-    private List<SelectItem> listaCiudades;
+    private List<SelectItem> listaCiudades, listaDepartamentos;
 
-    public List<SelectItem> getListaCiudades(){
-        this.listaCiudades = new ArrayList<SelectItem>();
-        List<Ciudad> ciudades=ciudadServicio.obtenerCiudades();
-        listaCiudades.clear();
-        for(Ciudad ciaa: ciudades){
-            SelectItem ciuItem= new SelectItem(ciaa.getCodigo(),ciaa.getNombre());
-            this.listaCiudades.add(ciuItem);
-
-        }
+    @Getter @Setter
+    private String hora;
 
 
-        return listaCiudades;
-    }
+
 
     @PostConstruct
     public void inicializar(){
-        System.out.println("Lo primero que se sabe es :"+this.labeled);
+        this.hora= LocalDateTime.now()+"";
 
         this.usuario = new Usuario();
-        ciu= new Ciudad();
+        depto= new Departamento();
+        ciudad= new Ciudad();
 
     }
 
+    /**
+     * En este método se guarda la información del nuevo usuario creado
+     * buscando primero la ciudad y agrgandola al usuario creado
+     * @return
+     */
     public String registrarUsuario(){
         try {
-            ciu=buscarCiudadUsuario();
-            usuario.setCiudad(ciu);
+            usuario.setNombre("el pepe");
+            ciudad=buscarCiudadUsuario();
+            usuario.setCiudad(ciudad);
             usuarioServicio.registrarUsuario(usuario);
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Registro exitoso");
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -79,11 +86,47 @@ public class UsuarioBean implements Serializable {
         return null;
     }
 
-    public Ciudad buscarCiudadUsuario() throws Exception{
+    /**
+     * Obtiene la lista de las ciudades dependiendo el departamento
+     * @return
+     */
+    public List<SelectItem> getListaCiudadesporDepartamento(AjaxBehaviorEvent e) throws Exception{
+        System.out.println("papi");
+        listaCiudades = new ArrayList<SelectItem>();
+        System.out.println(ciudadServicio.obtenerCiudadPorDepartamento(indexDepto));
+        List<Ciudad> depto=ciudadServicio.obtenerCiudadPorDepartamento(indexDepto);
+        listaCiudades.clear();
+        for(Ciudad ciaa: depto){
+            SelectItem ciuItem= new SelectItem(ciaa.getCodigo(),ciaa.getNombre());
+            this.listaCiudades.add(ciuItem);
 
-        return ciudadServicio.buscarCiudadPorCodigo(labeled);
+        }
+        return listaCiudades;
     }
 
+    public List<SelectItem> getListaDepartamentos(){
+        listaDepartamentos = new ArrayList<SelectItem>();
+        List<Departamento> depto=ciudadServicio.obtenerDepartamento();
+        listaDepartamentos.clear();
+        for(Departamento ciaa: depto){
+            SelectItem ciuItem= new SelectItem(ciaa.getCodigo(),ciaa.getNombre());
+            this.listaDepartamentos.add(ciuItem);
+
+        }
+        return listaDepartamentos;
+    }
+    public void ciudades(AjaxBehaviorEvent e){
+
+    }
+
+    public Ciudad buscarCiudadUsuario() throws Exception{
+
+        return ciudadServicio.buscarCiudadPorCodigo(indexCiudad);
+    }
+    public Ciudad buscarDepartamento() throws Exception{
+
+        return ciudadServicio.buscarCiudadPorCodigo(indexCiudad);
+    }
 
 
 }
