@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputStylesheet library="js" name="bootstrap.bundle.min.js"/>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <title>Página de Inicio</title>
+</h:head>
+<h:body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link active"  href="#">Unishop</a>
+                </li>
+                <li class="nav-item">
+                    <span class="pi pi-heart" style="font-size: 2rem"></span>
+                </li></ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class=""></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active"  href="index.xhtml">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registrar_usuario.xhtml">Registrar usuario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="crear_producto.xhtml">Crear Producto</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Crear producto
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                            <li><a class="dropdown-item" href="crear_producto.xhtml">Crear producto</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Link</a>
+                    </li>
+                </ul>
+                <h:form class="d-flex">
+                    <p:inputText class="form-control me-2" type="search" required="true" placeholder="Buscar producto" value="#{busquedaBean.busqueda}" />
+                    <p:commandButton  action="#{busquedaBean.buscar}" update="@form" value="Buscar"></p:commandButton>
+                </h:form>
+            </div>
+        </div>
+    </nav>
+
+    <ui:insert name="content"></ui:insert>
+</h:body>
+</html>

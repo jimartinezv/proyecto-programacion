@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Crear producto</title>
+</h:head>
+<h:body>
+    <p:panel header="Registar Usuario.">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel value="Nombre del producto" for="nombre_p"/>
+                <p:inputText id="nombre_p" value="#{productoBean.producto.nombre}" required="true"/>
+
+                <p:outputLabel value="Descripción del producto" for="desc_p"/>
+                <p:textEditor id="desc_p" value="#{productoBean.producto.descripcion}" required="true" height="300" secure="false"/>
+
+                <p:outputLabel value="Precio del prodcuto" for="precio_p"/>
+                <p:inputText id="precio_p" value="#{productoBean.producto.precio}" required="true" type="number"/>
+
+                <p:outputLabel value="Descuento del producto" for="descuento_p"/>
+                <p:inputNumber id="descuento_p" value="#{productoBean.producto.descuento}" required="true"/>
+
+                <p:outputLabel value="Unidades total" for="unidades_p"/>
+                <p:inputText id="unidades_p" value="#{productoBean.producto.unidades}" required="true" type="number"/>
+
+                <p:outputLabel value="Imagen del producto" for="imagen_p"/>
+                <p:fileUpload id="imagen_p" listener="#{productoBean.subirImagenes}" mode="advanced" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="true" sizeLimit="1000000" fileLimit="5" required="true"/>
+                <div class="card">
+                    <h:form>
+                        <p:fileUpload listener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" update="messages" sizeLimit="100000" fileLimit="3"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+
+                        <p:growl id="messages" showDetail="true" keepAlive="true"/>
+                    </h:form>
+                </div>
+
+
+            </h:panelGrid>
+            <p:growl showDetail="true"/>
+            <p:commandButton value="Crear producto" action="#{productoBean.publicarProducto}" update="@form" icon="pi pi-plus-plus"/>
+        </h:form>
+    </p:panel>
+</h:body>
+</html>
