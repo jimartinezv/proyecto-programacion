@@ -20,7 +20,7 @@ public class CondicionProducto implements Serializable {
     @EqualsAndHashCode.Include
     private Integer codigo;
     @Column(nullable = false, length = 55)
-    private String tipoDocumento;
+    private String condicionProducto;
 
     @OneToMany(mappedBy = "condicionProducto")
     private List<Producto> producto;

@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
 public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class Categoria implements Serializable {
     @Column(nullable = false)
     private String nombre;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "categoria")
     private List<Producto> producto;
 
     public Categoria(String nombre) {

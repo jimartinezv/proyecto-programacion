@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.servicio;
 
 import co.edu.uniquindio.proyecto.entidades.Producto;
+import co.edu.uniquindio.proyecto.entidades.TipoDocumento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface UsuarioServicio {
     Usuario obtenerUsuario(String codigo) throws Exception;
 
     Usuario login(String email, String password) throws Exception;
+
+    List<TipoDocumento> listarDocumentos();
 
     void recuperarContrasena(String email);
 

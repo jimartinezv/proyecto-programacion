@@ -12,6 +12,7 @@ import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -58,11 +59,11 @@ public class Producto implements Serializable {
     @PositiveOrZero
     private float descuento;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> imagen;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     private CondicionProducto condicionProducto;
 
     @ManyToOne
@@ -82,12 +83,13 @@ public class Producto implements Serializable {
     private List<Subasta> subasta;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Ciudad ciudad;
 
     @ManyToMany(mappedBy = "producto")
     private List<Carrito> carrito;
 
-    @ManyToMany(mappedBy = "producto")
+    @ManyToMany
     private List<Categoria> categoria;
 
     //@OneToMany(mappedBy = "producto")
@@ -104,4 +106,14 @@ public class Producto implements Serializable {
         this.descuento = descuento;
         this.usuario = usuario;
     }
+
+    public String getImagenPrincipal(){
+        if(imagen!=null && !imagen.isEmpty()){
+            return imagen.get(0);
+        }
+        return "default.png";
+    }
+
+
+
 }

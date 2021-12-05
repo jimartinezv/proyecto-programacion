@@ -43,24 +43,35 @@ public class UsuarioBean implements Serializable {
     private Ciudad ciudad;
 
     @Setter @Getter
-    private Departamento depto;
+    private Departamento departamento;
+
+
 
     @Getter @Setter
-    private List<SelectItem> listaCiudades, listaDepartamentos;
+    private List<SelectItem>  listaDepartamentos;
+
+    @Getter @Setter
+    private List<Ciudad> ciudads;
+
+
 
     @Getter @Setter
     private String hora;
 
 
-
-
+    /**
+     * Metodo que se inicializa cuando se llama la clase
+     * variables hora para la hora de creación del producto
+     * se inicializa el usuario, el departamento y la ciudad
+     */
     @PostConstruct
     public void inicializar(){
         this.hora= LocalDateTime.now()+"";
 
         this.usuario = new Usuario();
-        depto= new Departamento();
+
         ciudad= new Ciudad();
+
 
     }
 
@@ -71,16 +82,15 @@ public class UsuarioBean implements Serializable {
      */
     public String registrarUsuario(){
         try {
-            usuario.setNombre("el pepe");
-            ciudad=buscarCiudadUsuario();
-            usuario.setCiudad(ciudad);
+
+
             usuarioServicio.registrarUsuario(usuario);
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Registro exitoso");
-            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-            return "producto_creado";
+            FacesContext.getCurrentInstance().addMessage("msj-bean", facesMessage);
+            return "/index.xhtml";
         } catch (Exception e) {
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta",e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            FacesContext.getCurrentInstance().addMessage("msj-bean", facesMessage);
             e.printStackTrace();
         }
         return null;
@@ -90,20 +100,24 @@ public class UsuarioBean implements Serializable {
      * Obtiene la lista de las ciudades dependiendo el departamento
      * @return
      */
-    public List<SelectItem> getListaCiudadesporDepartamento(AjaxBehaviorEvent e) throws Exception{
+    public List<Ciudad> getListaCiudadesporDepartamento1(AjaxBehaviorEvent e) throws Exception{
         System.out.println("papi");
-        listaCiudades = new ArrayList<SelectItem>();
-        System.out.println(ciudadServicio.obtenerCiudadPorDepartamento(indexDepto));
+        ciudads = new ArrayList<Ciudad>();
+
         List<Ciudad> depto=ciudadServicio.obtenerCiudadPorDepartamento(indexDepto);
-        listaCiudades.clear();
+        ciudads.clear();
         for(Ciudad ciaa: depto){
             SelectItem ciuItem= new SelectItem(ciaa.getCodigo(),ciaa.getNombre());
-            this.listaCiudades.add(ciuItem);
+            this.ciudads.add(ciaa);
 
         }
-        return listaCiudades;
+        return ciudads;
     }
 
+    /**
+     * Se listan los departamentos y se hace la transformación a selectItem
+     * @return
+     */
     public List<SelectItem> getListaDepartamentos(){
         listaDepartamentos = new ArrayList<SelectItem>();
         List<Departamento> depto=ciudadServicio.obtenerDepartamento();
@@ -115,18 +129,7 @@ public class UsuarioBean implements Serializable {
         }
         return listaDepartamentos;
     }
-    public void ciudades(AjaxBehaviorEvent e){
 
-    }
-
-    public Ciudad buscarCiudadUsuario() throws Exception{
-
-        return ciudadServicio.buscarCiudadPorCodigo(indexCiudad);
-    }
-    public Ciudad buscarDepartamento() throws Exception{
-
-        return ciudadServicio.buscarCiudadPorCodigo(indexCiudad);
-    }
 
 
 }

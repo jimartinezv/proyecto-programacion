@@ -7,22 +7,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Página de ejemplo</title>
-</h:head>
-<h:body>
-
-    <h:form id="pepe">
-        <h:panelGrid columns="2" cellpadding="5">
-            <p:outputLabel for="attr1" value="Atributo 1:" />
-            <p:inputText id="attr1" value="#{ejemploBean.atributoUno}" required="true"/>
-            <p:outputLabel for="attr2" value="Atributo 2:" />
-            <p:inputText id="attr2" value="#{ejemploBean.atributoDos}" required="true"/>
-        </h:panelGrid>
-        <p:commandButton action="#{ejemploBean.cambiar}" value="Cambiar valores"
-                         update="pepe" />
-    </h:form>
-</h:body>
+<ui:composition template="WEB-INF/template.xhtml">
+    <ui:define name="title">Página de ejemplo</ui:define>
+    <ui:define name="content">Ejemplo</ui:define>
+</ui:composition>
 </html>

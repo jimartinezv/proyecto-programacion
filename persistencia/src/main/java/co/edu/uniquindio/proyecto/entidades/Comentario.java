@@ -26,7 +26,7 @@ public class Comentario implements Serializable {
     private String mensaje;
     private String respuesta;
     @Column(name="timestamp", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate fechaComentario;
+    private LocalDateTime fechaComentario;
     private int calificacion;
 
     @ManyToOne
@@ -35,7 +35,7 @@ public class Comentario implements Serializable {
     @ManyToOne
     private Usuario usuario;
 
-    public Comentario(String mensaje, String respuesta, LocalDate fechaComentario, int calificacion) {
+    public Comentario(String mensaje, String respuesta, LocalDateTime fechaComentario, int calificacion) {
         this.mensaje = mensaje;
         this.respuesta = respuesta;
         this.fechaComentario = fechaComentario;

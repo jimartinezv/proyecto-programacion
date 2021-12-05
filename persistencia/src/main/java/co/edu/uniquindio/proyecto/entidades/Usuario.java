@@ -4,6 +4,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class Usuario extends Persona implements Serializable {
     private Ciudad ciudad;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     private TipoDocumento tipoDocumento;
 
     @OneToMany(mappedBy = "usuario")
@@ -67,6 +68,7 @@ public class Usuario extends Persona implements Serializable {
     private List<Chat> chatVendedor;
 
     @Column(nullable = false)
+    @Past
     private LocalDate fechaNacimiento;
     @Column(nullable = false, length = 50, unique = true)
     private String userName;

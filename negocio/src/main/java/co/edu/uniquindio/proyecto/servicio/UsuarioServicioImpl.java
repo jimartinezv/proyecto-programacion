@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.servicio;
 
 import co.edu.uniquindio.proyecto.entidades.Producto;
+import co.edu.uniquindio.proyecto.entidades.TipoDocumento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepo;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,23 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario actualizarUsuario(Usuario u) throws Exception {
-       Optional<Usuario> buscado= usuarioRepo.findByDocumento(u.getDocumento());
+        try{
+            Optional<Usuario> buscado= usuarioRepo.findByDocumento(u.getDocumento());
+
+            System.out.println("Se está actualizando el usuario "+ u.getUserName());
+            if(!buscado.isPresent())
+                throw new Exception("Codigo de usuario no existente");
+            System.out.println("Se actualizó");
+            System.out.println("el usuario :( " +(u.getDocumento()+u.getNombre()+u.getEmail()+u.getDireccion()+u.getContrasena()));
+            return usuarioRepo.save(u);
 
 
-        if(!buscado.isPresent())
-            throw new Exception("Codigo de usuario no existente");
-        return usuarioRepo.save(u);
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+
+        }
+
 
     }
 
@@ -86,8 +98,16 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario login(String email, String password) throws Exception {
-        return usuarioRepo.findByContrasenaAndAndEmail(password, email).orElseThrow(()-> new Exception("Los datos son incorrectos"));
+        System.out.println("alguien se esta logueando: e "+email+" p: "+password);
+       // return usuarioRepo.findByContrasenaAndAndEmailOruOrUserName(password, email).orElseThrow(()-> new Exception("Los datos son incorrectos"));
+       return usuarioRepo.loguearseEmailOrUsername(password, email).orElseThrow(()-> new Exception("Los datos son incorrectos"));
+        //return usuarioRepo.findByContrasenaAndAndEmail(password, email).orElseThrow(()-> new Exception("Los datos son incorrectos"));
 
+    }
+
+    @Override
+    public List<TipoDocumento> listarDocumentos() {
+        return usuarioRepo.listarTipoDocumento();
     }
 
     @Override

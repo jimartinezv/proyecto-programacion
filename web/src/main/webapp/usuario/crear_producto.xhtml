@@ -6,13 +6,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Crear producto</title>
-</h:head>
-<h:body>
+<ui:composition template="../WEB-INF/template.xhtml">
+<ui:define name="title">#{detalleProductoBean.producto.nombre}</ui:define>
+<ui:define name="content">
     <p:panel header="Registar Usuario.">
         <h:form>
             <h:panelGrid columns="2" cellpadding="5">
@@ -21,6 +19,15 @@
 
                 <p:outputLabel value="Descripción del producto" for="desc_p"/>
                 <p:textEditor id="desc_p" value="#{productoBean.producto.descripcion}" required="true" height="300" secure="false"/>
+
+
+
+                <p:outputLabel value="Categorías" for="categorias_p"/>
+                <p:selectManyMenu id="categorias_p" value="#{productoBean.producto.categoria}" showCheckbox="true" required="true" converter="#{categoriaConverter}">
+                    <f:selectItems value="#{productoBean.categorias}" var="categorias" itemLabel="#{categorias.nombre}"/>
+                </p:selectManyMenu>
+
+
 
                 <p:outputLabel value="Precio del prodcuto" for="precio_p"/>
                 <p:inputText id="precio_p" value="#{productoBean.producto.precio}" required="true" type="number"/>
@@ -33,15 +40,20 @@
 
                 <p:outputLabel value="Imagen del producto" for="imagen_p"/>
                 <p:fileUpload id="imagen_p" listener="#{productoBean.subirImagenes}" mode="advanced" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="true" sizeLimit="1000000" fileLimit="5" required="true"/>
-                <div class="card">
-                    <h:form>
-                        <p:fileUpload listener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                                      multiple="true" update="messages" sizeLimit="100000" fileLimit="3"
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
-                        <p:growl id="messages" showDetail="true" keepAlive="true"/>
-                    </h:form>
-                </div>
+                <p:outputLabel for="depto_p" value="Departamento"/>
+                <p:selectOneMenu id="depto_p" value="#{productoBean.indexDepto}">
+                    <f:selectItem itemLabel="Seleccione Departamento" itemValue=""/>
+                    <f:selectItems value="#{productoBean.listaDepartamentos}"/>
+                    <f:ajax event="change" render="ciudad_p" execute="depto_p" listener="#{productoBean.getListaCiudadesporDepartamento1}"/>
+
+                </p:selectOneMenu>
+
+                <p:outputLabel for="ciudad_p" value="Ciudad"/>
+                <p:selectOneMenu id="ciudad_p" value="#{productoBean.producto.ciudad}" converter="#{ciudadConverter}">
+                    <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
+                    <f:selectItems value="#{productoBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}"/>
+                </p:selectOneMenu>
 
 
             </h:panelGrid>
@@ -49,5 +61,4 @@
             <p:commandButton value="Crear producto" action="#{productoBean.publicarProducto}" update="@form" icon="pi pi-plus-plus"/>
         </h:form>
     </p:panel>
-</h:body>
-</html>
+</ui:define></ui:composition></html>
