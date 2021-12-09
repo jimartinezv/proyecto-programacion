@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.Nullable;
@@ -69,14 +70,17 @@ public class Producto implements Serializable {
 
     @OneToMany(mappedBy = "producto")
     @ToString.Exclude
+    @JsonIgnore
     private List<DetalleCompra> detalleCompra;
 
     @OneToMany(mappedBy = "producto")
     @ToString.Exclude
+    @JsonIgnore
     private List<Comentario> comentario;
 
     @OneToMany(mappedBy = "producto")
     @ToString.Exclude
+    @JsonIgnore
     private List<Subasta> subasta;
 
     @ManyToOne
@@ -84,13 +88,16 @@ public class Producto implements Serializable {
     private Ciudad ciudad;
 
     @ManyToMany(mappedBy = "producto")
+    @JsonIgnore
     private List<Carrito> carrito;
 
     @ManyToMany
+    @JsonIgnore
     private List<Categoria> categoria;
 
     //@OneToMany(mappedBy = "producto")
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Usuario> favoritoUsuario;
 
     public Producto(String nombre, Integer unidades, String descripcion, float precio, LocalDateTime fechaLmite, float descuento, Usuario usuario) {
