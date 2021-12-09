@@ -62,9 +62,6 @@ public class Producto implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> imagen;
 
-    @ManyToOne
-    //@JoinColumn(nullable = false)
-    private CondicionProducto condicionProducto;
 
     @ManyToOne
     @JoinColumn(nullable = false)

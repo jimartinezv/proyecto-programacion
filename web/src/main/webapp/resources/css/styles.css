@@ -234,3 +234,19 @@ margin-top:1.5rem;
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.boton-admin-edit{
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    background-color: #146c43 !important;
+}
+
+.boton-admin-sesion{
+
+    margin: -20px -50px !important;
+    position:relative !important;
+    top:50% !important;
+    left:50% !important;
+    background-color: #636464 !important;
+
+}

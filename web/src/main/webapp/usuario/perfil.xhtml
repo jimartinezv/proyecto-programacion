@@ -31,14 +31,15 @@
         </h:form>
 
         <p:dialog header="Iniciar sesión" showEffect="fade" widgetVar="editar_usuario" modal="true"
-                  rendered="#{seguridadBean.autenticado}"  >
+                  rendered="#{seguridadBean.autenticado}" >
             <h:form >
+
                 <h:panelGrid columns="3" cellpadding="10">
-                    <p:outputLabel for="edit_documento" value="Documento" />
-                    <p:inputText id="edit_documento" value="#{seguridadBean.usuarioSesion.documento}" required="true" disabled="true"/>
+                    <p:outputLabel for="edit_documento" value="Documento"  />
+                    <p:inputText id="edit_documento" value="#{seguridadBean.usuarioSesion.documento}" required="true" disabled="true" />
                     <p:message for="edit_documento" />
                     <p:outputLabel for="edit_email" value="Email " />
-                    <p:inputText id="edit_email" value="#{seguridadBean.email}" required="true"/>
+                    <p:inputText id="edit_email" value="#{seguridadBean.email}" inputmode="aqui va el" required="true"/>
                     <p:message for="edit_email" />
 
                     <p:outputLabel for="edit_username" value="userName " />
@@ -50,6 +51,10 @@
                     <p:inputText id="edit_nombre" value="#{seguridadBean.nombre}" required="true" />
                     <p:message for="edit_nombre" />
 
+                    <p:outputLabel for="edit_direccion" value="Direccion " />
+                    <p:inputText id="edit_direccion" value="#{seguridadBean.direccion}" required="true" />
+                    <p:message for="edit_direccion" />
+
                     <p:outputLabel for="edit_contrasena" value="Contraseña " />
                     <p:password id="edit_contrasena" value="#{seguridadBean.password}" required="true" />
                     <p:message for="edit_contrasena" />
@@ -57,6 +62,7 @@
                 <p:commandButton value="Editar" action="#{seguridadBean.editarUsuario}" onclick="editar_usuario.hide();"
                                  styleClass="mt-4" update="@form" icon="pi pi-user" iconPos="left" />
                 <p:growl for="update-bean" showDetail="true" />
+
             </h:form>
         </p:dialog>
     </ui:define></ui:composition>

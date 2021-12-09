@@ -23,6 +23,10 @@
 
                 <div class="px-3 py-2 bg-dark text-white">
                     <div class="container">
+
+
+
+
                         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                             <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                                 Unishop
@@ -35,6 +39,15 @@
                                         Home
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="/usuario/crear_producto.xhtml" class="nav-link text-white" >
+
+                                        Categorías
+                                    </a>
+                                </li>
+
+
                                 <li jsf:rendered="#{seguridadBean.autenticado}">
                                     <a href="/usuario/crear_producto.xhtml" class="nav-link text-white" >
 
@@ -47,12 +60,14 @@
                                         Carrito
                                     </a>
                                 </li>
-                                <li jsf:rendered="#{seguridadBean.autenticado}">
-                                    <a href="#" class="nav-link text-white">
 
-                                        Mis productos
+                                <li jsf:rendered="#{seguridadBean.autenticado}">
+                                    <a  href="/usuario/mis_productos.xhtml" class="nav-link text-white" >
+                                        <f:viewAction action="#{seguridadBean.cargarProductos}">Mis productos</f:viewAction>
+
                                     </a>
                                 </li>
+
                                 <li jsf:rendered="#{seguridadBean.autenticado}">
                                     <a href="/usuario/perfil.xhtml" class="nav-link text-white">
 
@@ -69,7 +84,7 @@
 
                         <h:form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
                             <h:panelGrid columns="2" cellpadding="1" >
-                            <p:inputText class="form-control me-2" type="search" required="true" placeholder="Buscar producto" value="#{busquedaBean.busqueda}" />
+                            <p:inputText class="form-control me-2" type="search" required="true" placeholder="Buscar producto o categoría" value="#{busquedaBean.busqueda}" />
                             <p:commandButton  action="#{busquedaBean.buscar}" update="@form"  icon="pi pi-search" styleClass="botones"></p:commandButton>
                             </h:panelGrid>
                         </h:form>

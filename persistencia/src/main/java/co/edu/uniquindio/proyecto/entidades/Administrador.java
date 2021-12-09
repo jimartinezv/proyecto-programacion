@@ -13,6 +13,5 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class Administrador extends Persona implements Serializable {
-    @OneToOne
-    private TipoDocumento tipoDocumento;
+
 }

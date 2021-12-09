@@ -7,17 +7,89 @@
 
 
     <ui:define name="title">
-        Bienvenido a Unishop
+        Bienvenido a Admin
     </ui:define>
 
 
 
     <ui:define name="content">
-        <h1>Bienvenido Boss</h1>
+        <h3>Acceso administrador</h3>
 
-        <div class="container">
-            <h1>Lista Productos</h1>
+            <h:form rendered="#{!seguridadAdminBean.autenticado}" >
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:outputLabel for="email_login" value="Email o Username" />
+                    <p:inputText id="email_login" value="#{seguridadAdminBean.email}" required="true" />
+                    <p:message for="email_login" />
+                    <p:outputLabel for="password_login" value="Password:" />
+                    <p:password id="password_login" value="#{seguridadAdminBean.password}" required="true"
+                    />
+                    <p:message for="password_login" />
+                </h:panelGrid>
+                <p:commandButton value="Iniciar Sesión" action="#{seguridadAdminBean.iniciarSesion}"
+                                 styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                <p:growl for="login-bean" showDetail="true" />
+            </h:form>
+        <div>
+            <h:form rendered="#{seguridadAdminBean.autenticado}">
+                <div> <h2>Hola administrador #{seguridadAdminBean.usuarioSesion.nombre}</h2></div>
+                <p:commandButton value="Crear Departamento" styleClass="boton-admin-edit" onclick="PF('departamento').show()"></p:commandButton><br></br>
+                <p:commandButton value="Crear Ciudades" styleClass="boton-admin-edit" onclick="PF('ciudades').show()"></p:commandButton><br></br>
+                <p:commandButton value="Crear Metodos de pago" styleClass="boton-admin-edit" onclick="PF('pagos').show()"></p:commandButton><br></br>
+                <p:commandButton value="Crear Categorías" styleClass="boton-admin-edit" onclick="PF('categoria').show()"></p:commandButton><br></br>
+                <p:commandButton value="Cerrar Sesion" styleClass="boton-admin-sesion" action="#{seguridadAdminBean.cerrarSesion}"></p:commandButton>
 
+            </h:form>
+        </div>
+        <div>
+            <p:dialog header="Crear categoría" showEffect="fade" widgetVar="categoria" modal="true"
+                       >
+                <h:form >
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="categoria_nombre" value="Nombre de categoría" />
+                        <p:inputText id="categoria_nombre" value="#{seguridadAdminBean.categoriaNombre}" required="true" />
+                        <p:message for="categoria_nombre" />
+
+
+                    </h:panelGrid>
+                    <p:commandButton value="Crear departamento" action="#{seguridadAdminBean.crearCategoria}" onclick="categoria.hide()"
+                                     styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                    <p:growl for="login-bean" showDetail="true" />
+                </h:form>
+            </p:dialog>
+        </div>
+
+        <div>
+            <p:dialog header="Crear departamento" showEffect="fade" widgetVar="departamento" modal="true"
+            >
+                <h:form >
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="departamento_nombre" value="Nombre de departamento" />
+                        <p:inputText id="departamento_nombre" value="#{seguridadAdminBean.departamentoNombre}" required="true" />
+                        <p:message for="departamento_nombre" />
+
+
+                    </h:panelGrid>
+                    <p:commandButton value="Crear departamento" action="#{seguridadAdminBean.crearDepartamento}" onclick="categoria.hide()"
+                                     styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                    <p:growl for="login-bean" showDetail="true" />
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Crear metodo de pago" showEffect="fade" widgetVar="pagos" modal="true"
+            >
+                <h:form >
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="pago_nombre" value="Metodo de pago" />
+                        <p:inputText id="pago_nombre" value="#{seguridadAdminBean.metodoPagoNombre}" required="true" />
+                        <p:message for="pago_nombre" />
+
+
+                    </h:panelGrid>
+                    <p:commandButton value="Crear metodo de pago" action="#{seguridadAdminBean.crearMetodoPago}" onclick="categoria.hide()"
+                                     styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                    <p:growl for="login-bean" showDetail="true" />
+                </h:form>
+            </p:dialog>
         </div>
     </ui:define>
 

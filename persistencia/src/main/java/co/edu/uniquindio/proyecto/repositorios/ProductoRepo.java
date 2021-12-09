@@ -25,6 +25,9 @@ public interface ProductoRepo extends JpaRepository<Producto, Integer> {
     @Query("select p.usuario.nombre from Producto p where p.codigo = :id")
     String obtenerNombreVendedor(Integer id);
 
+    @Query("select p from Producto p where p.usuario.documento=:id")
+    List<Producto> obtenerProductoPorUsuario(String id);
+
     @Query("select distinct c.usuario from Producto p join p.comentario c where p.codigo=:id")
     List<Usuario> listarUsuariosComentario(Integer id);
 

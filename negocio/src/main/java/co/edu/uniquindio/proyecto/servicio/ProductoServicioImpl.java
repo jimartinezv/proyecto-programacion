@@ -33,6 +33,23 @@ public class ProductoServicioImpl implements ProductoServicio {
 
     @Override
     public void actualizarProducto(Producto p) throws Exception {
+        try{
+            Optional<Producto> buscado= productoRepo.findById(p.getCodigo());
+
+
+            System.out.println("Se está actualizando el producto "+ p.getCodigo());
+            if(!buscado.isPresent())
+                throw new Exception("Codigo de prductoo no existente");
+            System.out.println("Se actualizó");
+            System.out.println("el producto :( " +(p.getCodigo()+p.getNombre()+p.getDescripcion()+p.getPrecio()+p.getUnidades()));
+            productoRepo.save(p);
+
+
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+
+        }
 
     }
 
@@ -101,7 +118,7 @@ public class ProductoServicioImpl implements ProductoServicio {
 
     @Override
     public List<Producto> listarProductorUsuario(String codigoUsuario) throws Exception {
-        return null;
+        return productoRepo.obtenerProductoPorUsuario(codigoUsuario);
     }
 
     @Override

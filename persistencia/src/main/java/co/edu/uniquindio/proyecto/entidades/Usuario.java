@@ -25,9 +25,6 @@ public class Usuario extends Persona implements Serializable {
     @JoinColumn(nullable = false)
     private Ciudad ciudad;
 
-    @ManyToOne
-    //@JoinColumn(nullable = false)
-    private TipoDocumento tipoDocumento;
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude

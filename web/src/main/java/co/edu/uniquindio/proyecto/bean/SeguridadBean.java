@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.bean;
 
 import co.edu.uniquindio.proyecto.dto.ProductoCarrito;
+import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.servicio.ProductoServicio;
 import co.edu.uniquindio.proyecto.servicio.UsuarioServicio;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * El alcance de la aplicación mantiene las variables durante toda la sesión
@@ -44,10 +47,19 @@ public class SeguridadBean implements Serializable {
     private ArrayList<ProductoCarrito> productosCarrito;
 
     @Getter @Setter
+    private List<Producto> productosUsuario;
+
+    @Getter @Setter
+    private Producto productoEditado;
+
+
+    @Getter @Setter
     private float subtotal;
 
     @Getter @Setter
     private Integer unidadesDisponibles;
+
+
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -56,14 +68,37 @@ public class SeguridadBean implements Serializable {
     ProductoServicio productoServicio;
 
     @PostConstruct
-    public void inicializar(){
+    public void inicializar() throws Exception {
         this.subtotal=0F;
         this.productosCarrito=new ArrayList<>();
+        this.productosUsuario= verProductosUsuario();
+        //System.out.println(productoServicio.listarProductorUsuario("1094908238").size()+" Tamaño");
 
 
 
     }
 
+
+    public String cargarProductos(){
+        try {
+            this.productosUsuario = verProductosUsuario();
+            return "/usuario/mis_productos.xhtml";
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "#";
+    }
+    public List<Producto> verProductosUsuario() throws Exception  {
+        try {
+            System.out.println("Estamos buscando productos del usuario");
+            productosUsuario=productoServicio.listarProductorUsuario(usuarioSesion.getDocumento());
+            return  productosUsuario;
+        }catch (Exception e){
+            System.out.println(e.getMessage()+" Error");
+            return null;
+        }
+
+    }
     public void agregarAlCarrito(Integer id, float precio, String nombre, String imagen, Integer unidades) {
         ProductoCarrito pc= new ProductoCarrito(id, nombre,imagen,1,unidades,precio);
         if(!productosCarrito.contains(pc)) {
@@ -75,6 +110,9 @@ public class SeguridadBean implements Serializable {
 
 
     }
+
+
+
 
     public void eliminarDelCarrito(int p){
         subtotal-=productosCarrito.get(p).getPrecio();
@@ -90,6 +128,32 @@ public class SeguridadBean implements Serializable {
 
         }
     }
+
+    public String cargarProductoParaEditar(Integer p){
+        try {
+            //p= productoServicio.obtenerProducto(Integer.parseInt(codigoProducto));
+            System.out.println("Estamos buscando el producto"+p);
+            //System.out.println(productoEditado.getCodigo()+"Buscando p");
+
+            productoEditado = productoServicio.obtenerProducto(p);
+            return "/usuario/editar_producto?faces-redirect=true&amp;producto=" + productoEditado.getCodigo();
+        }catch (Exception e){
+            e.printStackTrace();
+            return "/usuario/editar_producto.xhrml";
+        }
+    }
+
+    public String editarProducto(Integer id) throws Exception {
+
+        System.out.println("editando: "+ productoEditado.getCodigo());
+
+
+
+        productoEditado= productoServicio.obtenerProducto(id);
+        return "/usuario/editar_producto?faces-redirect=true&amp;producto="+id;
+    }
+
+
 
     public void editarUsuario(){
         System.out.println("editando: "+ nombre+email+password+direccion+username);
@@ -122,6 +186,11 @@ public class SeguridadBean implements Serializable {
 
                 usuarioSesion=usuarioServicio.login(email,password);
                 autenticado=true;
+                productosUsuario= verProductosUsuario();
+                email=usuarioSesion.getEmail();
+                nombre=usuarioSesion.getNombre();
+                direccion=usuarioSesion.getDireccion();
+                username=usuarioSesion.getUserName();
 
                 return "/index?faces-redirect=true";
             }catch (Exception e){
@@ -162,6 +231,8 @@ public class SeguridadBean implements Serializable {
      */
     public String cerrarSession(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        productosUsuario.clear();
+        usuarioSesion=null;
         return "/index?faces-redirect=true";
     }
     public String cambiarDato(){

@@ -35,6 +35,9 @@ public class ProductoBean implements Serializable {
     @Autowired
     CiudadServicio ciudadServicio;
 
+    @Autowired
+    SeguridadBean seguridadBean;
+
     @Getter @Setter
     private Producto producto;
 
@@ -64,6 +67,18 @@ public class ProductoBean implements Serializable {
     @Value("#{seguridadBean.usuarioSesion}")
     private Usuario usuarioSesion;
 
+    @Getter @Setter
+    @Value("#{seguridadBean.productoEditado}")
+    private Producto productoEditado;
+
+    @Getter @Setter
+    @Value("#{seguridadBean.productosUsuario}")
+    private List<Producto> productosUsuario;
+
+    @Getter @Setter
+    @Value("#{param['producto']}")
+    private String codigoProducto;
+
     @Value("${upload.url}")
     private String urlUploads;
 
@@ -78,6 +93,8 @@ public class ProductoBean implements Serializable {
 
         ciudad= new Ciudad();
     }
+
+
 
     public void subirImagenes(FileUploadEvent event){
         System.out.println("aqui estoy en subir imagenes");
@@ -102,6 +119,41 @@ public class ProductoBean implements Serializable {
         return null;
     }
 
+    public void editarProducto(Producto p) {
+
+        try {
+            System.out.println("edita paso1");
+            if(p!=null)
+            if(usuarioSesion!=null) {
+                System.out.println("edita paso sesion ok");
+                if (imagenes.isEmpty()) {
+                    p=productoEditado;
+                    System.out.println("edita paso final");
+                    //Usuario usuario = usuarioServicio.obtenerUsuario("9990");
+                    /**
+                     * prgunta profesor me toca quemar las imagenes porque no se guarda automaticamente
+                     */
+                    //p.setImagen(imagenes);
+                    //p.setUsuario(usuarioSesion);
+                    //producto.setFechaLmite(LocalDateTime.now().plusMonths(1));
+                    System.out.println("p "+ p.getNombre()+ " ... "+ p.getCodigo());
+                    productoServicio.actualizarProducto(p);
+                    productosUsuario=seguridadBean.verProductosUsuario();
+                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro exitoso");
+                    FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+
+                } else {
+                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Alerta", "Se necesita mas de una imagen");
+                    FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+                }
+            }
+        } catch (Exception e) {
+            FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta",e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+            e.printStackTrace();
+        }
+        //return null;
+        }
 
     public String publicarProducto(){
         try {
@@ -115,7 +167,7 @@ public class ProductoBean implements Serializable {
                     producto.setUsuario(usuarioSesion);
                     producto.setFechaLmite(LocalDateTime.now().plusMonths(1));
                     productoServicio.publicarProducto(producto);
-
+                    productosUsuario=seguridadBean.verProductosUsuario();
                     FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro exitoso");
                     FacesContext.getCurrentInstance().addMessage(null, facesMessage);
                     return "producto_creado?faces-redutect=true";

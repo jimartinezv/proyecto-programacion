@@ -1,19 +1,14 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
-import co.edu.uniquindio.proyecto.entidades.Categoria;
 import co.edu.uniquindio.proyecto.entidades.Producto;
-import co.edu.uniquindio.proyecto.entidades.TipoDocumento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +44,6 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     @Query("Select u from Usuario u where (u.email=:emailOrUsername or u.userName=:emailOrUsername) and u.contrasena=:clave")
     Optional<Usuario> loguearseEmailOrUsername(String clave, String emailOrUsername);
 
-    @Query("select td from TipoDocumento td ")
-    List<TipoDocumento> listarTipoDocumento();
+
 
 }

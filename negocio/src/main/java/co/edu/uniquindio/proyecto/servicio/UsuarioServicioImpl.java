@@ -1,7 +1,6 @@
 package co.edu.uniquindio.proyecto.servicio;
 
 import co.edu.uniquindio.proyecto.entidades.Producto;
-import co.edu.uniquindio.proyecto.entidades.TipoDocumento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepo;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,8 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
 
         }catch (Exception e){
-            throw new Exception(e.getMessage());
+            //throw new Exception(e.getMessage()+" Error al guardar el usuario");
+            return null;
 
         }
 
@@ -105,10 +105,6 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     }
 
-    @Override
-    public List<TipoDocumento> listarDocumentos() {
-        return usuarioRepo.listarTipoDocumento();
-    }
 
     @Override
     public void recuperarContrasena(String email) {

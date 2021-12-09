@@ -56,8 +56,12 @@ bold" />
 
                                         <h:outputText value="Precio:" />
                                         <h:outputText value="$#{prud.precio}" />
-                                        <h:outputText value="Categorías:" />
-                                        <h:outputText value="#{prud.categoria}"   />
+
+                                        <h:outputText value="Categoria:" />
+                                        <p:dataGrid emptyMessage="No hay cayegorías para este producto" styleClass="lista-carac" value="#{prud.categoria}" var="categoria">
+
+                                            <p><a href="/resultado_busqueda.xhtml?busqueda=#{categoria.nombre}">#{categoria.nombre}</a></p>
+                                        </p:dataGrid>
 
                                     </h:panelGrid>
                                 </p:outputPanel>
@@ -72,6 +76,25 @@ bold" />
                     </p:dataViewListItem>
                 </p:dataView>
             </h:form>
+        </div>
+        <div>
+            <p:dialog header="Iniciar sesión" showEffect="fade" widgetVar="login" modal="true"
+                      rendered="#{!seguridadBean.autenticado}" >
+                <h:form >
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="email_login" value="Email o Username" />
+                        <p:inputText id="email_login" value="#{seguridadBean.email}" required="true" />
+                        <p:message for="email_login" />
+                        <p:outputLabel for="password_login" value="Password:" />
+                        <p:password id="password_login" value="#{seguridadBean.password}" required="true"
+                        />
+                        <p:message for="password_login" />
+                    </h:panelGrid>
+                    <p:commandButton value="Iniciar Sesión" action="#{seguridadBean.iniciarSesion}"
+                                     styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                    <p:growl for="login-bean" showDetail="true" />
+                </h:form>
+            </p:dialog>
         </div>
     </ui:define>
 

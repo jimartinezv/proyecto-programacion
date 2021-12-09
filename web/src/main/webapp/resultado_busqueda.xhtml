@@ -54,8 +54,11 @@ bold" />
 
                                     <h:outputText value="Precio:" />
                                     <h:outputText value="$#{prud.precio}" />
-                                    <h:outputText value="Categorías:" />
-                                    <h:outputText value="#{prud.categoria}"   />
+                                    <h:outputText value="Categoria:" />
+                                    <p:dataGrid emptyMessage="No hay cayegorías para este producto" styleClass="lista-carac" value="#{prud.categoria}" var="categoria">
+
+                                        <p><a href="/resultado_busqueda.xhtml?busqueda=#{categoria.nombre}">#{categoria.nombre}</a></p>
+                                    </p:dataGrid>
 
                                 </h:panelGrid>
                             </p:outputPanel>

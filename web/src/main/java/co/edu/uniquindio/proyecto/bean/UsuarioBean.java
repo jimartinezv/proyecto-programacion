@@ -83,7 +83,7 @@ public class UsuarioBean implements Serializable {
     public String registrarUsuario(){
         try {
 
-
+            System.out.println(usuario.getDocumento());
             usuarioServicio.registrarUsuario(usuario);
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Registro exitoso");
             FacesContext.getCurrentInstance().addMessage("msj-bean", facesMessage);
@@ -128,6 +128,24 @@ public class UsuarioBean implements Serializable {
 
         }
         return listaDepartamentos;
+    }
+
+    public void editarUsuario(Usuario u){
+        //System.out.println("editando: "+ nombre+email+password+direccion+username);
+        try{
+            Usuario actualizado= u;
+            actualizado.setNombre(u.getNombre());
+            actualizado.setEmail(u.getEmail());
+            actualizado.setContrasena(u.getContrasena());
+
+            actualizado.setUserName(u.getUserName());
+            usuarioServicio.actualizarUsuario(actualizado);
+            FacesMessage fm= new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Usuario actualizado");
+            FacesContext.getCurrentInstance().addMessage("update-bean", fm);
+        }catch (Exception e){
+            FacesMessage fm= new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("update-bean", fm);
+        }
     }
 
 
