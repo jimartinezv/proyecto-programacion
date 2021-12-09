@@ -38,6 +38,6 @@ public class BusquedaBean implements Serializable {
         }
     }
     public String buscar(){
-        return "resultado_busqueda?faces-redirect=true&amp;busqueda="+busqueda;
+        return "/resultado_busqueda?faces-redirect=true&amp;busqueda="+busqueda;
     }
 }

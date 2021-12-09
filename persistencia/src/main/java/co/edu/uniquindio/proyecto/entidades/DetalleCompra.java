@@ -26,6 +26,7 @@ public class DetalleCompra implements Serializable {
     private Producto producto;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Compra compra;
 
 

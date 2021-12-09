@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
 import co.edu.uniquindio.proyecto.dto.ProductoValido;
+import co.edu.uniquindio.proyecto.entidades.Categoria;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 ;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
@@ -41,8 +42,8 @@ public interface ProductoRepo extends JpaRepository<Producto, Integer> {
      * @param nombre
      * @return
      */
-    @Query("select p from Producto p where p.nombre like concat('%',:nombre,'%') ")
-    List<Producto> buscarProductoNombre(String nombre);
+    @Query("select p from Producto p, IN(p.categoria) c where p.nombre like concat('%',:nombre,'%') or c.nombre=:nombre ")
+    List<Producto> buscarProductoNombreAndCategoria(String nombre);
     /**
     @Query("select count(p) from Producto p  join p.categoria c group by c");
     List<Object[]> obtenerTotalProductosPorSubasta();
@@ -68,6 +69,12 @@ public interface ProductoRepo extends JpaRepository<Producto, Integer> {
     // where c.codigo=7 GROUP BY p.nombre,c.codigo order by suma DESC LIMIT 1;
     @Query("select sum(dc.unidades), p.nombre as suma from DetalleCompra dc, IN(dc.producto) p, in(p.categoria) c where c.codigo=:id group by p.nombre,c.codigo order by suma desc")
     List<Object[]> mostarProductoMasVendidoCategoria(Integer id);
+
+    @Query("select c from Categoria c where c.codigo=:id")
+    Categoria buscarCategoria(Integer id);
+
+    @Query("select c from Categoria c")
+    List<Categoria> listarCategoria();
 
 
 

@@ -26,7 +26,6 @@ public class Persona implements Serializable {
     private String documento;
     @Column(nullable = false, length = 55)
     @NotBlank(message = "Campo de nombre obligatorio")
-    @Null(message = "Campo de nombre obligatorio")
     private String nombre;
     @Column(nullable = false, length = 155, unique = true)
     @Email
@@ -34,6 +33,7 @@ public class Persona implements Serializable {
     private String email;
     @NotBlank(message = "La contraseña es obligatoria")
     @Column(nullable = false, length = 55)
+    @Length(max = 55, min = 8, message = "La contraseña debe tener minimo 8 caracteres y maximo 55")
     private String contrasena;
 
 

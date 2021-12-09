@@ -1,0 +1,62 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="css"><h:outputStylesheet library="css" name="shooping-cart.css"/></ui:define>
+    <ui:define name="title">
+        Carrito
+    </ui:define>
+
+
+
+    <ui:define name="content">
+
+        <h3>Nombre: #{seguridadBean.usuarioSesion.nombre}</h3>
+        <h3>Username: #{seguridadBean.usuarioSesion.userName}</h3>
+        <h3>Correo: #{seguridadBean.usuarioSesion.email}</h3>
+        <h3>Ciudad: #{seguridadBean.usuarioSesion.ciudad.nombre}</h3>
+
+        <h:form rendered="#{seguridadBean.autenticado}" id="form_button">
+
+            <div class="text-end">
+
+                <p:commandButton class="btn btn-light  me-2" onclick="PF('editar_usuario').show()" value="Editar usuario" ></p:commandButton>
+
+
+            </div>
+        </h:form>
+
+        <p:dialog header="Iniciar sesión" showEffect="fade" widgetVar="editar_usuario" modal="true"
+                  rendered="#{seguridadBean.autenticado}"  >
+            <h:form >
+                <h:panelGrid columns="3" cellpadding="10">
+                    <p:outputLabel for="edit_documento" value="Documento" />
+                    <p:inputText id="edit_documento" value="#{seguridadBean.usuarioSesion.documento}" required="true" disabled="true"/>
+                    <p:message for="edit_documento" />
+                    <p:outputLabel for="edit_email" value="Email " />
+                    <p:inputText id="edit_email" value="#{seguridadBean.email}" required="true"/>
+                    <p:message for="edit_email" />
+
+                    <p:outputLabel for="edit_username" value="userName " />
+                    <p:inputText id="edit_username" value="#{seguridadBean.username}" required="true"/>
+                    <p:message for="edit_username" />
+
+
+                    <p:outputLabel for="edit_nombre" value="Nombre " />
+                    <p:inputText id="edit_nombre" value="#{seguridadBean.nombre}" required="true" />
+                    <p:message for="edit_nombre" />
+
+                    <p:outputLabel for="edit_contrasena" value="Contraseña " />
+                    <p:password id="edit_contrasena" value="#{seguridadBean.password}" required="true" />
+                    <p:message for="edit_contrasena" />
+                </h:panelGrid>
+                <p:commandButton value="Editar" action="#{seguridadBean.editarUsuario}" onclick="editar_usuario.hide();"
+                                 styleClass="mt-4" update="@form" icon="pi pi-user" iconPos="left" />
+                <p:growl for="update-bean" showDetail="true" />
+            </h:form>
+        </p:dialog>
+    </ui:define></ui:composition>

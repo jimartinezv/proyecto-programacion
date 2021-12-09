@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <ui:insert name="css"></ui:insert>
+   <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputStylesheet library="js" name="bootstrap.bundle.min.js"/>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <title><ui:insert name="title">Plantilla</ui:insert></title>
+</h:head>
+<h:body>
+
+    <div id="header">
+
+
+                <div class="px-3 py-2 bg-dark text-white">
+                    <div class="container">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                                Unishop
+                            </a>
+
+                            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                                <li>
+                                    <a href="/" class="nav-link text-secondary">
+
+                                        Home
+                                    </a>
+                                </li>
+                                <li jsf:rendered="#{seguridadBean.autenticado}">
+                                    <a href="/usuario/crear_producto.xhtml" class="nav-link text-white" >
+
+                                        Agregar producto
+                                    </a>
+                                </li>
+                                <li jsf:rendered="#{seguridadBean.autenticado}">
+                                    <a href="/usuario/carrito.xhtml" class="nav-link text-white">
+
+                                        Carrito
+                                    </a>
+                                </li>
+                                <li jsf:rendered="#{seguridadBean.autenticado}">
+                                    <a href="#" class="nav-link text-white">
+
+                                        Mis productos
+                                    </a>
+                                </li>
+                                <li jsf:rendered="#{seguridadBean.autenticado}">
+                                    <a href="/usuario/perfil.xhtml" class="nav-link text-white">
+
+                                        Perfil
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-3 py-2 border-bottom mb-3">
+                    <div class="container d-flex flex-wrap justify-content-center">
+
+                        <h:form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
+                            <h:panelGrid columns="2" cellpadding="1" >
+                            <p:inputText class="form-control me-2" type="search" required="true" placeholder="Buscar producto" value="#{busquedaBean.busqueda}" />
+                            <p:commandButton  action="#{busquedaBean.buscar}" update="@form"  icon="pi pi-search" styleClass="botones"></p:commandButton>
+                            </h:panelGrid>
+                        </h:form>
+                        <h:form rendered="#{!seguridadBean.autenticado}">
+
+                        <div class="text-end">
+
+                            <p:commandButton class="btn btn-light text-dark me-2" onclick="PF('login').show()" value="Login" icon="pi pi-sign-in"></p:commandButton>
+                             <p:commandButton  class="btn btn-primary" value="Sign-up" icon="pi pi-user-plus" action="/registrar_usuario.xhtml"></p:commandButton>
+
+                        </div>
+                        </h:form>
+
+                        <div jsf:rendered="#{seguridadBean.autenticado}">
+                           <!-- <p:outputLabel value="Hola: #{seguridadBean.usuarioSesion.nombre}" />-->
+                            <p:link>
+                                <p:graphicImage url="/uploads/default.png" class="avatar imagen-usuario"  ></p:graphicImage>
+                            </p:link>
+                            <h:form>
+                                <p:commandButton value="Cerrar Sesion" action="#{seguridadBean.cerrarSession}"/>
+                            </h:form>
+
+                        </div>
+                        <p:dialog header="Iniciar sesión" showEffect="fade" widgetVar="login" modal="true"
+                                  rendered="#{!seguridadBean.autenticado}" >
+                        <h:form >
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:outputLabel for="email_login" value="Email o Username" />
+                                <p:inputText id="email_login" value="#{seguridadBean.email}" required="true" />
+                                <p:message for="email_login" />
+                                <p:outputLabel for="password_login" value="Password:" />
+                                <p:password id="password_login" value="#{seguridadBean.password}" required="true"
+                                />
+                                <p:message for="password_login" />
+                            </h:panelGrid>
+                            <p:commandButton value="Iniciar Sesión" action="#{seguridadBean.iniciarSesion}"
+                                             styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                            <p:growl for="login-bean" showDetail="true" />
+                        </h:form>
+                        </p:dialog>
+                    </div>
+                </div>
+
+
+    </div>
+
+    <div id="content">
+        <div class="container">
+            <ui:insert name="content">Contenido</ui:insert>
+        </div>
+
+    </div>
+    <div id="footer" class="footer footer-principal">
+        <ui:insert name="footer">
+
+                <ui:insert name="footer">
+                    <div class="py-4 bg-light" align="center">
+                        <div class="justify-content-center" >
+                            <div class="col-10" >
+                                <span>Universidad del Quindío - Programación avanzada - 2021</span>
+                            </div>
+                        </div>
+                    </div>
+                </ui:insert>
+
+        </ui:insert>
+    </div>
+</h:body>
+</html>
