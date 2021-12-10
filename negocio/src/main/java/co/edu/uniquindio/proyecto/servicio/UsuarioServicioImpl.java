@@ -67,7 +67,8 @@ public class UsuarioServicioImpl implements UsuarioServicio{
     public void eliminarUsuario(String codigo) throws Exception {
         Optional<Usuario> buscado= usuarioRepo.findByDocumento(codigo);
         if(!buscado.isPresent())
-            throw new Exception("El codigo del usuario no existe");
+            throw new Exception("El codigo del usuario no existe" + codigo);
+        System.out.println("Se va a eliminar el usuario "+ buscado.get().getUserName());
         usuarioRepo.deleteUsuarioByDocumento(codigo);
 
     }
@@ -93,8 +94,9 @@ public class UsuarioServicioImpl implements UsuarioServicio{
         if(buscado.isEmpty())
             throw new Exception("El codigo del usuario no existe");
         return buscado.get();
-
     }
+
+
 
     @Override
     public Usuario login(String email, String password) throws Exception {

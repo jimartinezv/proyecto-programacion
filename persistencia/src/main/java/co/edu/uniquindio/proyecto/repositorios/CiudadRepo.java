@@ -31,6 +31,9 @@ public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
     @Query("select c from Ciudad c where c.departamento.codigo=:id")
     List<Ciudad> ciudadesPorDepartamento(Integer id);
 
+    @Query("select d from Departamento  d where d.codigo=:id")
+    Optional<Departamento> obtenerDepartamento(Integer id);
+
     /**
      * Sentencia que trae los departamentos
      */

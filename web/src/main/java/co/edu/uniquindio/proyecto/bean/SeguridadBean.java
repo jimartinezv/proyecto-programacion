@@ -35,7 +35,7 @@ public class SeguridadBean implements Serializable {
     private String valor;
 
     @Getter @Setter
-    private Boolean autenticado;
+    private Boolean autenticado,favorito;
 
     @Getter @Setter
     private String email,password, nombre,direccion, username;
@@ -98,6 +98,20 @@ public class SeguridadBean implements Serializable {
             return null;
         }
 
+    }
+    public String agregarFavorito(Producto p) throws Exception {
+        try {
+            System.out.println("El producto es: " + p.getNombre() + " User "+ usuarioSesion.getNombre());
+            p.agregarFavorito(usuarioSesion);
+            favorito=true;
+            //productoServicio.actualizarProducto(p);
+            FacesMessage fm= new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Producto agregado a favoritos");
+            FacesContext.getCurrentInstance().addMessage("add-fav", fm);
+            return "#";
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
     public void agregarAlCarrito(Integer id, float precio, String nombre, String imagen, Integer unidades) {
         ProductoCarrito pc= new ProductoCarrito(id, nombre,imagen,1,unidades,precio);

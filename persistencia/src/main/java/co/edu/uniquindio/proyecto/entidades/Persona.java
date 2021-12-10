@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.validator.constraints.Length;

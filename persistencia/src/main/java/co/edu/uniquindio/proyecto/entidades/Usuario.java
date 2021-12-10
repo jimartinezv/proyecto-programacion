@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 
@@ -28,6 +29,7 @@ public class Usuario extends Persona implements Serializable {
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
+    @JsonIgnore
     private List<Producto> producto;
 
     @Column(nullable = false, length = 150)
@@ -35,18 +37,22 @@ public class Usuario extends Persona implements Serializable {
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
+    @JsonIgnore
     private List<Compra> compra;
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
+    @JsonIgnore
     private List<Comentario> comentario;
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
+    @JsonIgnore
     private List<SubastaUsuario> subastaUsuario;
 
     @OneToOne(mappedBy = "usuario")
     @ToString.Exclude
+    @JsonIgnore
     private Carrito carrito;
 
 
@@ -54,14 +60,17 @@ public class Usuario extends Persona implements Serializable {
     //@OneToMany(mappedBy = "usuario")
     @ManyToMany(mappedBy = "favoritoUsuario")
     @ToString.Exclude
+    @JsonIgnore
     private List<Producto> productosFavoritos;
 
     @OneToMany(mappedBy = "comprador")
     @ToString.Exclude
+    @JsonIgnore
     private List<Chat> chatComprador;
 
     @OneToMany(mappedBy = "vendedor")
     @ToString.Exclude
+    @JsonIgnore
     private List<Chat> chatVendedor;
 
     @Column(nullable = false)

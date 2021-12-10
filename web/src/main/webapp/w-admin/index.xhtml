@@ -90,6 +90,32 @@
                     <p:growl for="login-bean" showDetail="true" />
                 </h:form>
             </p:dialog>
+
+            <p:dialog header="Crear ciudad" showEffect="fade" widgetVar="ciudades" modal="true"
+            >
+                <h:form >
+                    <p:outputLabel for="depto_u" value="Departamento"/>
+                    <p:selectOneMenu id="depto_u" value="#{seguridadAdminBean.indexDepto}">
+                        <f:selectItem itemLabel="Seleccione Departamento" itemValue=""/>
+                        <f:selectItems value="#{seguridadAdminBean.listaDepartamentos}"/>
+
+                    </p:selectOneMenu>
+
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="ciudad_nombre" value="Ciudad" />
+                        <p:inputText id="ciudad_nombre" value="#{seguridadAdminBean.ciudad}" required="true" />
+                        <p:message for="ciudad_nombre" />
+
+
+                    </h:panelGrid>
+                    <p:commandButton value="Crear metodo de pago" action="#{seguridadAdminBean.crearCiudad}" onclick="categoria.hide()"
+                                     styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                    <p:growl for="login-bean" showDetail="true" />
+                </h:form>
+            </p:dialog>
+
+
+
         </div>
     </ui:define>
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CiudadServicioImpl implements CiudadServicio{
     @Autowired
@@ -39,7 +41,10 @@ public class CiudadServicioImpl implements CiudadServicio{
         return ciudadRepo.listarDepartamentos();
     }
 
-
+    @Override
+    public Optional<Departamento> obtenerDepartamento(Integer codigo) {
+        return ciudadRepo.obtenerDepartamento(codigo);
+    }
 
 
 }

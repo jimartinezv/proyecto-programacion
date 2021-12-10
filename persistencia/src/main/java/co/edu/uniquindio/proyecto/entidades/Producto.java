@@ -90,8 +90,7 @@ public class Producto implements Serializable {
     private List<Categoria> categoria;
 
     //@OneToMany(mappedBy = "producto")
-    @ManyToMany
-    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Usuario> favoritoUsuario;
 
     public Producto(String nombre, Integer unidades, String descripcion, float precio, LocalDateTime fechaLmite, float descuento, Usuario usuario) {
@@ -102,6 +101,11 @@ public class Producto implements Serializable {
         this.fechaLmite = fechaLmite;
         this.descuento = descuento;
         this.usuario = usuario;
+        this.favoritoUsuario= new ArrayList<>();
+    }
+
+    public void agregarFavorito(Usuario usuarioFav){
+        favoritoUsuario.add(usuarioFav);
     }
 
     public String getImagenPrincipal(){

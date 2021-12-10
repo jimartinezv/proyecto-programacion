@@ -1,7 +1,9 @@
 package co.edu.uniquindio.proyecto.rest;
 
 import co.edu.uniquindio.proyecto.dto.Mensaje;
+import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.servicio.ProductoServicio;
 import co.edu.uniquindio.proyecto.servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,29 +13,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/usuario")
-public class UsuarioRestController {
-
+public class ProductoRestControl {
     @Autowired
-    private UsuarioServicio usuarioServicio;
+    private ProductoServicio productoServicio;
 
     @GetMapping
-    public List<Usuario> listarUsuarios(){
-        return usuarioServicio.listarUsuarios();
+    public List<Producto> listarProductos(){
+        return productoServicio.listarProductos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerUsuario(@PathVariable(name = "id") String id){
+    public ResponseEntity<?> obtenerProducto(@PathVariable(name = "id") Integer id){
         try {
-            return ResponseEntity.status(200).body(usuarioServicio.obtenerUsuario(id));
+            return ResponseEntity.status(200).body(productoServicio.obtenerProducto(id));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new Mensaje(e.getMessage()));
         }
     }
     @PostMapping
-    public ResponseEntity<?>  crearUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<?>  crearProducto(@RequestBody Producto producto){
         try {
-            usuarioServicio.registrarUsuario(usuario);
-            return ResponseEntity.status(200).body(new Mensaje("Se ha creado el usuario"));
+            productoServicio.publicarProducto(producto);
+
+            return ResponseEntity.status(200).body(new Mensaje("Se ha creado el producto"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new Mensaje(e.getMessage()));
         }
@@ -41,11 +43,12 @@ public class UsuarioRestController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>  borrarUsuario(@PathVariable(name = "id") String id){
+    public ResponseEntity<?>  borrarProducto(@PathVariable(name = "id") Integer id){
         try{
             System.out.println("se eliminará el usuario" +id);
-            usuarioServicio.eliminarUsuario(id);
-            return ResponseEntity.status(200).body(new Mensaje("Usuario eliminado"));
+            productoServicio.eliminarProducto(id);
+
+            return ResponseEntity.status(200).body(new Mensaje("Producto eliminado"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new Mensaje(e.getMessage()));
         }
@@ -54,13 +57,13 @@ public class UsuarioRestController {
     }
 
     @PutMapping
-    public ResponseEntity<?>  actualizarUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<?>  actualizarProducto(@RequestBody Producto producto){
         try {
-            System.out.println(usuario.getDocumento()+"Api usuario actualiza");
-            usuarioServicio.actualizarUsuario(usuario);
-            return ResponseEntity.status(200).body(new Mensaje("Usuario actualizado"));
+            productoServicio.actualizarProducto(producto);
+
+            return ResponseEntity.status(200).body(new Mensaje("Producto actualizado"));
         }catch (Exception e){
-             e.printStackTrace();
+            e.printStackTrace();
             return ResponseEntity.status(500).body(new Mensaje(e.getMessage()));
         }
     }

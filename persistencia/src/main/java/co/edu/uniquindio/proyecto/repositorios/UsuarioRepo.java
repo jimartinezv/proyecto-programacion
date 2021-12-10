@@ -5,14 +5,17 @@ import co.edu.uniquindio.proyecto.entidades.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public interface UsuarioRepo extends JpaRepository<Usuario, String> {
 
 
@@ -33,6 +36,10 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     List<Object[]> usuarioGandorSubasta(Integer id);
 
     //Eliminar usuario por codigo
+    @Modifying
+    @Query("delete from Usuario u where u.documento=:codigo ")
+    void eliminarUsuario(String codigo);
+
     void deleteUsuarioByDocumento(String codigo);
 
     Optional<Usuario> findByDocumento(String codigo);

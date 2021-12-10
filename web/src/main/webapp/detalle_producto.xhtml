@@ -29,10 +29,10 @@
 
                         <h1 class="mt-4">$#{detalleProductoBean.producto.precio}</h1>
 
-                        <h:form class="mt-4" rendered="#{seguridadBean.autenticado}">
-                            <p:commandButton value="Añadir al carrito" icon="pi pi-shopping-cart" update="@form"
-                                             action="#{seguridadBean.agregarAlCarrito(detalleProductoBean.producto.codigo, detalleProductoBean.producto.precio, detalleProductoBean.producto.nombre, detalleProductoBean.producto.imagenPrincipal, detalleProductoBean.producto.unidades)}"/>
-                            <p:growl for="add-car" showDetail="true"/>
+                        <h:form class="mt-4" rendered="#{!seguridadBean.favorito}" >
+                            <p:commandButton  icon="pi pi-heart" update="@form"
+                                             action="#{seguridadBean.agregarFavorito(detalleProductoBean.producto)}"/>
+                            <p:growl for="add-fav" showDetail="true"/>
                         </h:form>
                         <h:form class="mt-4" rendered="#{seguridadBean.autenticado}">
                             <p:commandButton value="Añadir al carrito" icon="pi pi-shopping-cart" update="@form"
