@@ -6,6 +6,7 @@ import co.edu.uniquindio.proyecto.entidades.Departamento;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.servicio.CiudadServicio;
 import co.edu.uniquindio.proyecto.servicio.UsuarioServicio;
+import co.edu.uniquindio.proyecto.servicio.email.EmailService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,15 @@ import java.util.List;
 @ViewScoped
 public class UsuarioBean implements Serializable {
 
+    @Autowired
+    private EmailService emailService;
+
     @Getter @Setter
     private Usuario usuario;
+
+    @Getter @Setter
+    private boolean enviarCorreo;
+
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -85,6 +93,7 @@ public class UsuarioBean implements Serializable {
 
             System.out.println(usuario.getDocumento());
             usuarioServicio.registrarUsuario(usuario);
+            this.enviarCorreo=emailService.sendEmailTool("Gracias por registrarse en unishop",usuario.getEmail(),"Registro exitoso en unishop");
             FacesMessage facesMessage= new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Registro exitoso");
             FacesContext.getCurrentInstance().addMessage("msj-bean", facesMessage);
             return "/index.xhtml";

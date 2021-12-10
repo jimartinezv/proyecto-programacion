@@ -34,6 +34,11 @@
                                              action="#{seguridadBean.agregarAlCarrito(detalleProductoBean.producto.codigo, detalleProductoBean.producto.precio, detalleProductoBean.producto.nombre, detalleProductoBean.producto.imagenPrincipal, detalleProductoBean.producto.unidades)}"/>
                             <p:growl for="add-car" showDetail="true"/>
                         </h:form>
+                        <h:form class="mt-4" rendered="#{seguridadBean.autenticado}">
+                            <p:commandButton value="Añadir al carrito" icon="pi pi-shopping-cart" update="@form"
+                                             action="#{seguridadBean.agregarAlCarrito(detalleProductoBean.producto.codigo, detalleProductoBean.producto.precio, detalleProductoBean.producto.nombre, detalleProductoBean.producto.imagenPrincipal, detalleProductoBean.producto.unidades)}"/>
+                            <p:growl for="add-car" showDetail="true"/>
+                        </h:form>
 
                     </div>
                     <div class="box">
