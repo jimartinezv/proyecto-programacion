@@ -4,6 +4,6 @@
 #Archivos temporales de Maven
 /**/target/
 
-#Archivos IntelliJ
+#Archivos IntelliJ p
 *.iml
 /.idea
